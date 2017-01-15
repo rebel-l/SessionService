@@ -1,4 +1,4 @@
-package 
+package sessionservice
 
 import (
     "log"
