@@ -1,0 +1,17 @@
+{
+  "name": "rebel-l/session-service",
+  "description": "A service to manage user sessions written in Golang.",
+  "minimum-stability": "stable",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Rebel L",
+      "email": "dj@rebel-l.net",
+      "homepage": "https://github.com/rebel-l",
+      "role": "Engineering Manager"
+    }
+  ],
+  "require-dev": {
+    "rebel-l/sisa": "2.2.*"
+  }
+}

@@ -28,16 +28,16 @@ Vagrant.configure("2") do |config|
         # path, and data_bags path (all relative to this Vagrantfile), and adding
         # some recipes and/or roles.
         #
-#         devbox.vm.provision "chef_solo" do |chef|
-#             chef.cookbooks_path = "./vendor/rebel-l/sisa/cookbooks"
-#             chef.roles_path = "./vendor/rebel-l/sisa/roles"
-#             chef.environments_path = "./vendor/rebel-l/sisa/environments"
-#             chef.data_bags_path = "./vendor/rebel-l/sisa/data_bags"
-#             # chef.add_recipe "mysql"
-#             chef.add_role "WebServer"
-#             chef.environment = "development"
-#
-#             # You may also specify custom JSON attributes:
+        devbox.vm.provision "chef_solo" do |chef|
+            chef.cookbooks_path = "./vendor/rebel-l/sisa/cookbooks"
+            chef.roles_path = "./vendor/rebel-l/sisa/roles"
+            chef.environments_path = "./vendor/rebel-l/sisa/environments"
+            chef.data_bags_path = "./vendor/rebel-l/sisa/data_bags"
+            chef.add_role "Default"
+            chef.environment = "development"
+            chef.add_recipe "Docker"
+
+            # You may also specify custom JSON attributes:
 #             chef.json = {
 #                 'projects' => [
 #                     {
@@ -55,6 +55,6 @@ Vagrant.configure("2") do |config|
 #                     }
 #                 ]
 #             }
-#         end
+        end
     end
 end
