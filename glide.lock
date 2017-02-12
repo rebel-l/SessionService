@@ -1,0 +1,10 @@
+hash: 172c9855701ec6beb41941f74c83eaced9ad567a283d952e7ed47d24b07a1228
+updated: 2017-02-12T22:42:05.832977029+01:00
+imports:
+- name: github.com/go-redis/redis
+  version: 2fe9c5cc0a8da9faeba3a45511a4ece8f7e37dc2
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gorilla/mux
+  version: 392c28fe23e1c45ddba891b0320b3b5df220beea
+testImports: []
