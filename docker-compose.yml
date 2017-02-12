@@ -1,0 +1,6 @@
+version: '2'
+services:
+  session-service:
+    image: "rebel1l/session-service:latest"
+  redis:
+    image: "redis:latest"
