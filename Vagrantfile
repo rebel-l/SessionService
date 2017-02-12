@@ -36,6 +36,7 @@ Vagrant.configure("2") do |config|
             chef.add_role "Default"
             chef.environment = "development"
             chef.add_recipe "Docker"
+            chef.add_recipe "GolangCompiler"
 
             # You may also specify custom JSON attributes:
 #             chef.json = {
