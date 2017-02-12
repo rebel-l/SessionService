@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "rebel-l/sisa",
-            "version": "2.2.0",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/Rebel-L/sisa.git",
-                "reference": "578cc78fea6477f97c08d00a43c12671332faf3c"
+                "reference": "717d304848a2059a555b52ef2a185dae2d0bc736"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/Rebel-L/sisa/get/578cc78fea6477f97c08d00a43c12671332faf3c.zip",
-                "reference": "578cc78fea6477f97c08d00a43c12671332faf3c",
+                "url": "https://bitbucket.org/Rebel-L/sisa/get/717d304848a2059a555b52ef2a185dae2d0bc736.zip",
+                "reference": "717d304848a2059a555b52ef2a185dae2d0bc736",
                 "shasum": ""
             },
             "type": "project",
@@ -34,7 +34,7 @@
                     "role": "CTO"
                 }
             ],
-            "description": "This package provides you chef cookbooks for setting up servers for web applications based on PHP, NodeJS or Golang using Vagrant, Virtual Box and Chef Solo. You'll find more details in the README.md",
+            "description": "This package provides you chef cookbooks for setting up servers for web applications based on PHP, NodeJS, Golang or Docker using Vagrant, Virtual Box and Chef Solo. You'll find more details in the README.md",
             "homepage": "https://bitbucket.org/Rebel-L/sisa",
             "keywords": [
                 "chef",
@@ -42,7 +42,7 @@
                 "provisioning",
                 "server"
             ],
-            "time": "2017-02-08T23:35:00+00:00"
+            "time": "2017-02-12T02:18:15+00:00"
         }
     ],
     "aliases": [],
