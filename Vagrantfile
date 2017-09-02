@@ -13,7 +13,6 @@ Vagrant.configure("2") do |config|
 	config.vm.define 'SessionService' do |devbox|
         devbox.vm.network "private_network", ip: "192.168.2.10"
         devbox.vm.hostname = "session.dev"
-#         devbox.hostmanager.aliases = %w(images.ddr.dev assets.ddr.dev www.ddr.dev)
 
         devbox.vm.provider "virtualbox" do |vb|
 			vb.name = "SessionService"
@@ -21,7 +20,7 @@ Vagrant.configure("2") do |config|
 # 			vb.gui = true
 
 			# Use VBoxManage to customize the VM. For example to change memory:
-# 			vb.customize ["modifyvm", :id, "--memory", "1024"]
+			vb.customize ["modifyvm", :id, "--memory", "1024"]
         end
 
         # Enable provisioning with chef solo, specifying a cookbooks path, roles
@@ -33,29 +32,25 @@ Vagrant.configure("2") do |config|
             chef.roles_path = "./vendor/rebel-l/sisa/roles"
             chef.environments_path = "./vendor/rebel-l/sisa/environments"
             chef.data_bags_path = "./vendor/rebel-l/sisa/data_bags"
-            chef.add_role "Default"
+            chef.add_role "DockerServer"
             chef.environment = "development"
-            chef.add_recipe "Docker"
             chef.add_recipe "GolangCompiler"
 
             # You may also specify custom JSON attributes:
-#             chef.json = {
-#                 'projects' => [
-#                     {
-#                         'name'			=> 'ddr',
-#                         'type'			=> 'php-www',
-#                         'server_name'	=> 'ddr.dev',
-#                         'root'			=> '/vagrant/public',
-#                         'index'			=> 'index.php'
-#                     },
-#                     {
-#                         'name'			=> 'ddr_redirect',
-#                         'type'			=> 'redirect',
-#                         'server_name'	=> 'ddr.dev',
-#                         'target'		=> 'ddr.dev'
-#                     }
-#                 ]
-#             }
+            chef.json = {
+                'Golang' => {
+                    'version' => '1.9'
+                },
+                'System' => {
+                    'Iptables' => {
+                        'TCP' => {
+                            'Ports' => [
+                                8080
+                            ]
+                        }
+                    }
+                }
+            }
         end
     end
 end
