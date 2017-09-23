@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
 	config.vm.box = "Ubuntu1604"
-	config.vm.box_url = "https://www.dropbox.com/s/g5tzb35b58sr6tr/ubuntu1604lts5110.box?dl=1"
+	config.vm.box_url = "https://www.dropbox.com/s/g21fr63t9leluh3/ubuntu1604lts5126.box?dl=1"
 	config.ssh.insert_key = false	# Avoid that vagrant removes default insecure key
 
 	# Host manager setup
