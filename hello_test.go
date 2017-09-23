@@ -1,4 +1,4 @@
-package SessionService
+package main
 
 import "testing"
 
