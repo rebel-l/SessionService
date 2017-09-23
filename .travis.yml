@@ -5,6 +5,7 @@ go:
 
 before_script:
   - go get -u github.com/alecthomas/gometalinter
+  - gometalinter --install
   - chmod 755 ./scripts/*
 
 script: ./scripts/build.sh
