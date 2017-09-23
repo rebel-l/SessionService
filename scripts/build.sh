@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 echo
-echo "Start build SessionService"
+echo -en "\E[40;36m\033[1mStart build SessionService\033[0m"
+echo
 echo
 
 # Execute tests
@@ -16,7 +17,7 @@ then
 fi
 
 # Execute linter
-~/.go/bin/gometalinter
+gometalinter
 EXITCODE=$?
 if [ $EXITCODE != 0 ]
 then
