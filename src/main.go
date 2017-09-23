@@ -8,15 +8,15 @@ import (
 	//
 	//    sw "github.com/myname/myrepo/go"
 	//
-	sw "./go"
-	"log"
-	"net/http"
+	//sw "./go"
+	//"log"
+	//"net/http"
 )
 
 func main() {
-	log.Printf("Server started")
-
-	router := sw.NewRouter()
-	
-	log.Fatal(http.ListenAndServe(":8080", router))
+	//log.Printf("Server started")
+	//
+	//router := sw.NewRouter()
+	//
+	//log.Fatal(http.ListenAndServe(":8080", router))
 }
