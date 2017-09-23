@@ -73,3 +73,10 @@ cd /vagrant # or the alias 'cdproj'
 ```
 
 On your virtual machine you can run your docker like described in the [Docker Environment](#dockerenv).
+
+# Quality Assurance
+For quality assurance [Travis CI](https://travis-ci.org) is connected with this repository. But before committing or 
+pushing anything to this repository you can quickly check everything by executing the build script:
+```bash
+./scripts/build.sh
+```
