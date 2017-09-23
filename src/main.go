@@ -1,6 +1,6 @@
-package main
+package src
 
-import (
+//import (
 	// WARNING!
 	// Change this to a fully-qualified import path
 	// once you place this file into your project.
@@ -11,12 +11,12 @@ import (
 	//sw "./go"
 	//"log"
 	//"net/http"
-)
+//)
 
-func main() {
+//func main() {
 	//log.Printf("Server started")
 	//
 	//router := sw.NewRouter()
 	//
 	//log.Fatal(http.ListenAndServe(":8080", router))
-}
+//}
