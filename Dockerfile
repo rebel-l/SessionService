@@ -23,8 +23,9 @@ RUN curl -o ./go.tar.gz https://storage.googleapis.com/golang/go${GOVERSION}.lin
     ln -s /usr/local/go/bin/go /usr/bin/ && \
     mkdir ${GOPATH} && \
     export GOPATH=${GOPATH} && \
+    export PATH=$PATH:$GOPATH/bin && \
     go get -u github.com/alecthomas/gometalinter && \
-    ${GOPATH}/bin/gometalinter --install
+    gometalinter --install
 
 COPY ./scripts/docker-entrypoint.sh ./docker-entrypoint
 RUN chmod 755 ./docker-entrypoint
