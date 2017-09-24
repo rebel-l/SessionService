@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "rebel-l/sisa",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/Rebel-L/sisa.git",
-                "reference": "c34b989d3e672b2c6b5b4f86cb6af2552d894f54"
+                "reference": "4ef4b1443a66474a9a2f5566bc97d1ce70be9abf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/Rebel-L/sisa/get/c34b989d3e672b2c6b5b4f86cb6af2552d894f54.zip",
-                "reference": "c34b989d3e672b2c6b5b4f86cb6af2552d894f54",
+                "url": "https://bitbucket.org/Rebel-L/sisa/get/4ef4b1443a66474a9a2f5566bc97d1ce70be9abf.zip",
+                "reference": "4ef4b1443a66474a9a2f5566bc97d1ce70be9abf",
                 "shasum": ""
             },
             "type": "project",
@@ -42,7 +42,7 @@
                 "provisioning",
                 "server"
             ],
-            "time": "2017-09-24T00:04:53+00:00"
+            "time": "2017-09-24T19:33:15+00:00"
         }
     ],
     "aliases": [],
