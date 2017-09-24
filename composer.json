@@ -12,6 +12,6 @@
     }
   ],
   "require-dev": {
-    "rebel-l/sisa": "2.2.*"
+    "rebel-l/sisa": "2.3.*"
   }
 }

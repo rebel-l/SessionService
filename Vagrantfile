@@ -35,6 +35,7 @@ Vagrant.configure("2") do |config|
             chef.add_role "DockerServer"
             chef.environment = "development"
             chef.add_recipe "GolangCompiler"
+            chef.add_recipe "Redis::tools"
 
             # You may also specify custom JSON attributes:
             chef.json = {
@@ -45,7 +46,8 @@ Vagrant.configure("2") do |config|
                     'Iptables' => {
                         'TCP' => {
                             'Ports' => [
-                                4000
+                                4000,
+                                6379
                             ]
                         }
                     }
