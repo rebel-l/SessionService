@@ -1,6 +1,18 @@
-version: '2'
+version: '3'
 services:
-  session-service:
-    image: "rebel1l/session-service:latest"
+  sessionservice:
+    container_name: sessionservice
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/vagrant
+    links:
+      - redis
+    tty: true
+
   redis:
-    image: "redis:latest"
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
