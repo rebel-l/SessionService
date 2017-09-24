@@ -5,7 +5,7 @@ This service delivers several endpoints to create, load, change and delete sessi
 
 # Requirements
 ## <a name="reqman"></a>Mandatory
-The only requirement so far is [Docker](https://www.docker.com/). 
+The only requirement so far is [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/). 
 
 ## <a name="reqopt"></a>Optional
 Optionally you are able to run the whole environment in a virtual machine. Therefor you need:
@@ -24,6 +24,23 @@ If you decided to run it on a virtual machine, then please do the steps in [Vagr
 Before you can start ensure that you have install all [requirements](#reqman). All 
 commands will be executed in the projects _root_ folder.
 
+### Docker Compose Way
+The easiest way is to use docker compose. You are able to launch every container with only one command:
+```bash
+docker-compose up -d
+```
+
+To work with go and the addional tools, you can access the container with:
+```bash
+docker-compose exec sessionservice ./docker-entrypoint
+```
+
+On the command line of the docker container you can now find all the projects data at:
+```bash
+cd /vagrant
+```
+
+### Docker Way
 Now you can build the docker image by excuting:
 ```bash
 docker build -t sessionservice .
@@ -45,6 +62,11 @@ go version
 ``` 
 
 To detach from the docker container you need just to press the keys _Ctrl + p Ctrl + q_.
+
+To launch the Redis container execute the following:
+```bash
+docker run -it -p 6379:6379 --name redis -d redis redis-server --appendonly yes
+```
 
 ## <a name="vagrantenv"></a>Vagrant Environment 
 If you would like to have clean sandbox for everything a vagrant machine is maybe your choice. 
