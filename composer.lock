@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9c7e0499c2150309ce495e06f4102af",
+    "content-hash": "091b907c95ff218e60eb1dfd04486330",
     "packages": [],
     "packages-dev": [
         {
             "name": "rebel-l/sisa",
-            "version": "2.2.4",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/Rebel-L/sisa.git",
-                "reference": "4ffdb8e032ac97046e36eb0b2c79700e5304eb83"
+                "reference": "c34b989d3e672b2c6b5b4f86cb6af2552d894f54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/Rebel-L/sisa/get/4ffdb8e032ac97046e36eb0b2c79700e5304eb83.zip",
-                "reference": "4ffdb8e032ac97046e36eb0b2c79700e5304eb83",
+                "url": "https://bitbucket.org/Rebel-L/sisa/get/c34b989d3e672b2c6b5b4f86cb6af2552d894f54.zip",
+                "reference": "c34b989d3e672b2c6b5b4f86cb6af2552d894f54",
                 "shasum": ""
             },
             "type": "project",
@@ -42,7 +42,7 @@
                 "provisioning",
                 "server"
             ],
-            "time": "2017-09-02T12:36:59+00:00"
+            "time": "2017-09-24T00:04:53+00:00"
         }
     ],
     "aliases": [],
