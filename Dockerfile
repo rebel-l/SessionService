@@ -6,7 +6,7 @@ FROM ubuntu:16.04
 MAINTAINER Rebel L <dj@rebel-l.net>
 
 ENV GOVERSION 1.9
-ENV GOPATH /root/.go
+ENV GOPATH /workspace
 
 LABEL vendor="Rebel L" \
       version="0.1.0" \
@@ -26,6 +26,14 @@ RUN curl -o ./go.tar.gz https://storage.googleapis.com/golang/go${GOVERSION}.lin
     export PATH=$PATH:$GOPATH/bin && \
     go get -u github.com/alecthomas/gometalinter && \
     gometalinter --install
+
+# .profile
+RUN echo "" >> /root/.bashrc && \
+	echo "# Custom settings" >> /root/.bashrc && \
+	echo "export GOPATH=${GOPATH}" >> /root/.bashrc && \
+    echo "export PATH=$PATH:${GOPATH}/bin" >> /root/.bashrc && \
+    echo "alias cdproj='cd ${GOPATH}/src/github.com/rebel-l/sessionservice'" >> /root/.bashrc && \
+	echo "" >> /root/.bashrc
 
 COPY ./scripts/docker-entrypoint.sh ./docker-entrypoint
 RUN chmod 755 ./docker-entrypoint

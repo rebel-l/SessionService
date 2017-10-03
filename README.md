@@ -48,7 +48,7 @@ docker build -t sessionservice .
 
 Afterwards you can run the docker container by:
 ```bash
-docker run -it -p 8080:8080 --name sessionservice -v /vagrant/:/vagrant sessionservice
+docker run -it -p 8080:8080 --name sessionservice -v /vagrant/:/workspace/src/github.com/rebel-l/sessionservice sessionservice
 ```
 
 On the command line of the docker container you can now find all the projects data at:

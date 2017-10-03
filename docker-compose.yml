@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - .:/vagrant
+      - .:/workspace/src/github.com/rebel-l/sessionservice
     links:
       - redis
     tty: true
