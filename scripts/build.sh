@@ -17,7 +17,7 @@ then
 fi
 
 # Execute linter
-gometalinter --vendor
+gometalinter --vendor --config=gometalinter.json
 EXITCODE=$?
 if [ $EXITCODE != 0 ]
 then

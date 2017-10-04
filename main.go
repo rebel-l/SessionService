@@ -2,18 +2,29 @@ package main
 
 import (
 	"fmt"
+	"flag"
 	"github.com/go-redis/redis"
 )
 
-func main(){
-	var a = multiply(6,7)
+func main() {
+	// parse the flags
+	runRedis := flag.Bool("redis", false, "execute redis operations")
+	flag.Parse()
+	fmt.Printf("Run Redis: %t\n", *runRedis)
+
+	// print some texts
+	a := multiply(6,7)
 	fmt.Printf("Hello World\n")
 	fmt.Printf("6 x 7 is %d\n", a)
-	redisPing()
-	setEntry("name", "Lars")
-	setEntry("age", "29")
-	fmt.Printf("Hello %s!\n", getEntry("name"))
-	fmt.Printf("You are %s years old!\n", getEntry("age"))
+
+	// do some redis operations if redis flag is set
+	if *runRedis == true {
+		redisPing()
+		setEntry("name", "Lars")
+		setEntry("age", "29")
+		fmt.Printf("Hello %s!\n", getEntry("name"))
+		fmt.Printf("You are %s years old!\n", getEntry("age"))
+	}
 }
 
 func multiply(a int, b int) int {
