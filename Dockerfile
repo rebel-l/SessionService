@@ -13,8 +13,8 @@ LABEL vendor="Rebel L" \
       description="This image provides a session service as REST API."
 
 # Prepare install of packages
-RUN apt-get -y update \
-    && apt-get install -y curl git
+RUN apt-get -y update && \
+	apt-get install -y curl git gcc
 
 # Install go
 RUN curl -o ./go.tar.gz https://storage.googleapis.com/golang/go${GOVERSION}.linux-amd64.tar.gz && \
