@@ -863,15 +863,19 @@ margin-bottom: 20px;
                     <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
 
+                                <li class="nav-header" data-group="External"><a href="#api-External">API Methods - External</a></li>
+                                    <li data-group="External" data-name="docs" class="">
+                                        <a href="#api-External-docs">docs</a>
+                                    </li>
+                                    <li data-group="External" data-name="ping" class="">
+                                        <a href="#api-External-ping">ping</a>
+                                    </li>
                                 <li class="nav-header" data-group="Internal"><a href="#api-Internal">API Methods - Internal</a></li>
                                     <li data-group="Internal" data-name="deleteSession" class="">
                                         <a href="#api-Internal-deleteSession">deleteSession</a>
                                     </li>
                                     <li data-group="Internal" data-name="loadSession" class="">
                                         <a href="#api-Internal-loadSession">loadSession</a>
-                                    </li>
-                                    <li data-group="Internal" data-name="ping" class="">
-                                        <a href="#api-Internal-ping">ping</a>
                                     </li>
                                     <li data-group="Internal" data-name="updateSession" class="">
                                         <a href="#api-Internal-updateSession">updateSession</a>
@@ -904,6 +908,808 @@ margin-bottom: 20px;
             </div>
             <div id="sections">
 
+
+                            <section id="api-External">
+                                <h1>External</h1>
+
+
+
+
+
+
+
+                                    <div id="api-External-docs">
+
+                                        <article id="api-External-docs-0" data-group="User" data-name="docs" data-version="0">
+                                            <div class="pull-left">
+                                                <h1>docs</h1>
+                                                <p>Endpoint to this documentation.</p>
+                                            </div>
+                                            <div class="pull-right">
+
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <p></p>
+                                            <p class="marked">This is the endpoint to get this documentation.</p>
+                                            <p></p>
+                                            <br />
+
+                                            <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/docs</span></code></pre>
+
+                                            <p>
+                                                <h3>Usage and SDK Samples</h3>
+                                            </p>
+
+                                            <ul class="nav nav-tabs nav-tabs-examples">
+                                                <li class="active">
+                                                    <a href="#examples-External-docs-0-curl">Curl</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-External-docs-0-java">Java</a>
+            </li>
+            <li class="">
+              <a href="#examples-External-docs-0-android">Android</a>
+            </li>
+            <!--<li class="">
+              <a href="#examples-External-docs-0-groovy">Groovy</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-External-docs-0-objc">Obj-C</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#examples-External-docs-0-javascript">JavaScript</a>
+                                                </li>
+                                                <!--<li class="">
+              <a href="#examples-External-docs-0-angular">Angular</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-External-docs-0-csharp">C#</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-External-docs-0-php">PHP</a>
+            </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="examples-External-docs-0-curl">
+                                                    <pre class="prettyprint"><code class="language-bsh">
+curl -X <span style="text-transform: uppercase;">get</span> "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/docs"
+
+
+</code></pre>
+                                                </div>
+
+                                                <div class="tab-pane" id="examples-External-docs-0-java">
+                                                  <pre class="prettyprint"><code class="language-java">
+import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import .ExternalApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ExternalApiExample {
+
+    public static void main(String[] args) {
+        
+        ExternalApi apiInstance = new ExternalApi();
+        try {
+            apiInstance.docs();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ExternalApi#docs");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+
+                                                <div class="tab-pane" id="examples-External-docs-0-android">
+                                                  <pre class="prettyprint"><code class="language-java">
+import .ExternalApi;
+
+public class ExternalApiExample {
+
+    public static void main(String[] args) {
+        ExternalApi apiInstance = new ExternalApi();
+        try {
+            apiInstance.docs();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ExternalApi#docs");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+          <!--
+          <div class="tab-pane" id="examples-External-docs-0-groovy">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div> -->
+
+
+                                                <div class="tab-pane" id="examples-External-docs-0-objc">
+                                                    <pre class="prettyprint"><code class="language-cpp">
+
+
+ExternalApi *apiInstance = [[ExternalApi alloc] init];
+
+// Endpoint to this documentation.
+[apiInstance docsWithCompletionHandler: 
+              ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+
+                                                    </code></pre>
+                                                </div>
+                                                <div class="tab-pane" id="examples-External-docs-0-javascript">
+                                                    <pre class="prettyprint"><code class="language-js">
+var  = require('');
+
+var api = new .ExternalApi()
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.docs(callback);
+
+                                                    </code></pre>
+                                                </div>
+
+                                                <!--<div class="tab-pane" id="examples-External-docs-0-angular">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div>-->
+
+                                                <div class="tab-pane" id="examples-External-docs-0-csharp">
+                                                    <pre class="prettyprint"><code class="language-cs">
+using System;
+using System.Diagnostics;
+using .Api;
+using .Client;
+using ;
+
+namespace Example
+{
+    public class docsExample
+    {
+        public void main()
+        {
+            
+            var apiInstance = new ExternalApi();
+
+            try
+            {
+                // Endpoint to this documentation.
+                apiInstance.docs();
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ExternalApi.docs: " + e.Message );
+            }
+        }
+    }
+}
+
+                                                    </code></pre>
+                                                </div>
+
+
+                                                <div class="tab-pane" id="examples-External-docs-0-php">
+                                                  <pre class="prettyprint"><code class="language-php">
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new io.swagger.client\Api\ExternalApi();
+
+try {
+    $api_instance->docs();
+} catch (Exception $e) {
+    echo 'Exception when calling ExternalApi->docs: ', $e->getMessage(), PHP_EOL;
+}
+
+                                                  </code></pre>
+          </div>
+
+                                            </div>
+
+
+
+
+
+                                            <h2>Parameters</h2>
+
+
+
+
+
+
+
+
+
+                                            <h2>Responses</h2>
+
+                                                <h3> Status: 200 - Sends the html for the documentation. </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-External-docs-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-External-docs-schema">
+
+
+
+
+                                                        <div id='examples-External-docs-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Sends the html for the documentation."
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-External-docs-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-External-docs-schema-200');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-External-docs-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                        </article>
+
+                                    </div>
+
+                                    <hr>
+
+
+
+
+
+
+
+
+                                    <div id="api-External-ping">
+
+                                        <article id="api-External-ping-0" data-group="User" data-name="ping" data-version="0">
+                                            <div class="pull-left">
+                                                <h1>ping</h1>
+                                                <p>Quick check if service is operating.</p>
+                                            </div>
+                                            <div class="pull-right">
+
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <p></p>
+                                            <p class="marked">It&#39;s a quick check if the service is online and is able to handle requests.
+</p>
+                                            <p></p>
+                                            <br />
+
+                                            <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/ping</span></code></pre>
+
+                                            <p>
+                                                <h3>Usage and SDK Samples</h3>
+                                            </p>
+
+                                            <ul class="nav nav-tabs nav-tabs-examples">
+                                                <li class="active">
+                                                    <a href="#examples-External-ping-0-curl">Curl</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-External-ping-0-java">Java</a>
+            </li>
+            <li class="">
+              <a href="#examples-External-ping-0-android">Android</a>
+            </li>
+            <!--<li class="">
+              <a href="#examples-External-ping-0-groovy">Groovy</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-External-ping-0-objc">Obj-C</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#examples-External-ping-0-javascript">JavaScript</a>
+                                                </li>
+                                                <!--<li class="">
+              <a href="#examples-External-ping-0-angular">Angular</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-External-ping-0-csharp">C#</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-External-ping-0-php">PHP</a>
+            </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="examples-External-ping-0-curl">
+                                                    <pre class="prettyprint"><code class="language-bsh">
+curl -X <span style="text-transform: uppercase;">get</span> "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/ping"
+
+
+</code></pre>
+                                                </div>
+
+                                                <div class="tab-pane" id="examples-External-ping-0-java">
+                                                  <pre class="prettyprint"><code class="language-java">
+import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import .ExternalApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ExternalApiExample {
+
+    public static void main(String[] args) {
+        
+        ExternalApi apiInstance = new ExternalApi();
+        try {
+            PingResponseSuccess result = apiInstance.ping();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ExternalApi#ping");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+
+                                                <div class="tab-pane" id="examples-External-ping-0-android">
+                                                  <pre class="prettyprint"><code class="language-java">
+import .ExternalApi;
+
+public class ExternalApiExample {
+
+    public static void main(String[] args) {
+        ExternalApi apiInstance = new ExternalApi();
+        try {
+            PingResponseSuccess result = apiInstance.ping();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ExternalApi#ping");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+          <!--
+          <div class="tab-pane" id="examples-External-ping-0-groovy">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div> -->
+
+
+                                                <div class="tab-pane" id="examples-External-ping-0-objc">
+                                                    <pre class="prettyprint"><code class="language-cpp">
+
+
+ExternalApi *apiInstance = [[ExternalApi alloc] init];
+
+// Quick check if service is operating.
+[apiInstance pingWithCompletionHandler: 
+              ^(PingResponseSuccess output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+
+                                                    </code></pre>
+                                                </div>
+                                                <div class="tab-pane" id="examples-External-ping-0-javascript">
+                                                    <pre class="prettyprint"><code class="language-js">
+var  = require('');
+
+var api = new .ExternalApi()
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.ping(callback);
+
+                                                    </code></pre>
+                                                </div>
+
+                                                <!--<div class="tab-pane" id="examples-External-ping-0-angular">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div>-->
+
+                                                <div class="tab-pane" id="examples-External-ping-0-csharp">
+                                                    <pre class="prettyprint"><code class="language-cs">
+using System;
+using System.Diagnostics;
+using .Api;
+using .Client;
+using ;
+
+namespace Example
+{
+    public class pingExample
+    {
+        public void main()
+        {
+            
+            var apiInstance = new ExternalApi();
+
+            try
+            {
+                // Quick check if service is operating.
+                PingResponseSuccess result = apiInstance.ping();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ExternalApi.ping: " + e.Message );
+            }
+        }
+    }
+}
+
+                                                    </code></pre>
+                                                </div>
+
+
+                                                <div class="tab-pane" id="examples-External-ping-0-php">
+                                                  <pre class="prettyprint"><code class="language-php">
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new io.swagger.client\Api\ExternalApi();
+
+try {
+    $result = $api_instance->ping();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ExternalApi->ping: ', $e->getMessage(), PHP_EOL;
+}
+
+                                                  </code></pre>
+          </div>
+
+                                            </div>
+
+
+
+
+
+                                            <h2>Parameters</h2>
+
+
+
+
+
+
+
+
+
+                                            <h2>Responses</h2>
+
+                                                <h3> Status: 200 - session service is operating normal </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-External-ping-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-External-ping-schema">
+
+
+
+
+                                                        <div id='examples-External-ping-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "session service is operating normal",
+  "schema" : {
+    "$ref" : "#/definitions/PingResponseSuccess"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-External-ping-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-External-ping-schema-200');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-External-ping-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 403 - The client is not allowed to do this request. </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-External-ping-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-External-ping-schema">
+
+
+
+
+                                                        <div id='examples-External-ping-schema-403' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "The client is not allowed to do this request."
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-External-ping-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-External-ping-schema-403');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-External-ping-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 503 - service or storage is unavailable (or both). check the response details. </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-External-ping-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-External-ping-schema">
+
+
+
+
+                                                        <div id='examples-External-ping-schema-503' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "service or storage is unavailable (or both). check the response details.",
+  "schema" : {
+    "$ref" : "#/definitions/PingResponseFailure"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-External-ping-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-External-ping-schema-503');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-External-ping-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                        </article>
+
+                                    </div>
+
+                                    <hr>
+
+                            </section>
 
                             <section id="api-Internal">
                                 <h1>Internal</h1>
@@ -2360,544 +3166,6 @@ try {
 
 
 
-                                    <div id="api-Internal-ping">
-
-                                        <article id="api-Internal-ping-0" data-group="User" data-name="ping" data-version="0">
-                                            <div class="pull-left">
-                                                <h1>ping</h1>
-                                                <p>Quick check if service is operating.</p>
-                                            </div>
-                                            <div class="pull-right">
-
-                                            </div>
-                                            <div class="clearfix"></div>
-
-                                            <p></p>
-                                            <p class="marked">It&#39;s a quick check if the service is online and is able to handle requests.
-</p>
-                                            <p></p>
-                                            <br />
-
-                                            <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/ping</span></code></pre>
-
-                                            <p>
-                                                <h3>Usage and SDK Samples</h3>
-                                            </p>
-
-                                            <ul class="nav nav-tabs nav-tabs-examples">
-                                                <li class="active">
-                                                    <a href="#examples-Internal-ping-0-curl">Curl</a>
-                                                </li>
-                                                <li class="">
-              <a href="#examples-Internal-ping-0-java">Java</a>
-            </li>
-            <li class="">
-              <a href="#examples-Internal-ping-0-android">Android</a>
-            </li>
-            <!--<li class="">
-              <a href="#examples-Internal-ping-0-groovy">Groovy</a>
-            </li>-->
-                                                <li class="">
-                                                    <a href="#examples-Internal-ping-0-objc">Obj-C</a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="#examples-Internal-ping-0-javascript">JavaScript</a>
-                                                </li>
-                                                <!--<li class="">
-              <a href="#examples-Internal-ping-0-angular">Angular</a>
-            </li>-->
-                                                <li class="">
-                                                    <a href="#examples-Internal-ping-0-csharp">C#</a>
-                                                </li>
-                                                <li class="">
-              <a href="#examples-Internal-ping-0-php">PHP</a>
-            </li>
-                                            </ul>
-
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="examples-Internal-ping-0-curl">
-                                                    <pre class="prettyprint"><code class="language-bsh">
-curl -X <span style="text-transform: uppercase;">get</span> -H "X-API-Key: [[apiKey]]"  -H "X-APP-ID: [[apiKey]]"  "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/ping"
-
-
-</code></pre>
-                                                </div>
-
-                                                <div class="tab-pane" id="examples-Internal-ping-0-java">
-                                                  <pre class="prettyprint"><code class="language-java">
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import .InternalApi;
-
-import java.io.File;
-import java.util.*;
-
-public class InternalApiExample {
-
-    public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        
-        // Configure API key authorization: apiKey
-        ApiKeyAuth apiKey = (ApiKeyAuth) defaultClient.getAuthentication("apiKey");
-        apiKey.setApiKey("YOUR API KEY");
-        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-        //apiKey.setApiKeyPrefix("Token");
-
-        // Configure API key authorization: appId
-        ApiKeyAuth appId = (ApiKeyAuth) defaultClient.getAuthentication("appId");
-        appId.setApiKey("YOUR API KEY");
-        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-        //appId.setApiKeyPrefix("Token");
-
-        InternalApi apiInstance = new InternalApi();
-        try {
-            PingResponseSuccess result = apiInstance.ping();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling InternalApi#ping");
-            e.printStackTrace();
-        }
-    }
-}
-
-                                                  </code></pre>
-          </div>
-
-
-                                                <div class="tab-pane" id="examples-Internal-ping-0-android">
-                                                  <pre class="prettyprint"><code class="language-java">
-import .InternalApi;
-
-public class InternalApiExample {
-
-    public static void main(String[] args) {
-        InternalApi apiInstance = new InternalApi();
-        try {
-            PingResponseSuccess result = apiInstance.ping();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling InternalApi#ping");
-            e.printStackTrace();
-        }
-    }
-}
-
-                                                  </code></pre>
-          </div>
-
-          <!--
-          <div class="tab-pane" id="examples-Internal-ping-0-groovy">
-            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-          </div> -->
-
-
-                                                <div class="tab-pane" id="examples-Internal-ping-0-objc">
-                                                    <pre class="prettyprint"><code class="language-cpp">
-Configuration *apiConfig = [Configuration sharedConfig];
-
-// Configure API key authorization: (authentication scheme: apiKey)
-[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-API-Key"];
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-API-Key"];
-
-// Configure API key authorization: (authentication scheme: appId)
-[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-APP-ID"];
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-APP-ID"];
-
-
-
-InternalApi *apiInstance = [[InternalApi alloc] init];
-
-// Quick check if service is operating.
-[apiInstance pingWithCompletionHandler: 
-              ^(PingResponseSuccess output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-
-                                                    </code></pre>
-                                                </div>
-                                                <div class="tab-pane" id="examples-Internal-ping-0-javascript">
-                                                    <pre class="prettyprint"><code class="language-js">
-var  = require('');
-var defaultClient = .ApiClient.instance;
-
-// Configure API key authorization: apiKey
-var apiKey = defaultClient.authentications['apiKey'];
-apiKey.apiKey = "YOUR API KEY"
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//apiKey.apiKeyPrefix['X-API-Key'] = "Token"
-
-// Configure API key authorization: appId
-var appId = defaultClient.authentications['appId'];
-appId.apiKey = "YOUR API KEY"
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//appId.apiKeyPrefix['X-APP-ID'] = "Token"
-
-var api = new .InternalApi()
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.ping(callback);
-
-                                                    </code></pre>
-                                                </div>
-
-                                                <!--<div class="tab-pane" id="examples-Internal-ping-0-angular">
-            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-          </div>-->
-
-                                                <div class="tab-pane" id="examples-Internal-ping-0-csharp">
-                                                    <pre class="prettyprint"><code class="language-cs">
-using System;
-using System.Diagnostics;
-using .Api;
-using .Client;
-using ;
-
-namespace Example
-{
-    public class pingExample
-    {
-        public void main()
-        {
-            
-            // Configure API key authorization: apiKey
-            Configuration.Default.ApiKey.Add("X-API-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("X-API-Key", "Bearer");
-            // Configure API key authorization: appId
-            Configuration.Default.ApiKey.Add("X-APP-ID", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("X-APP-ID", "Bearer");
-
-            var apiInstance = new InternalApi();
-
-            try
-            {
-                // Quick check if service is operating.
-                PingResponseSuccess result = apiInstance.ping();
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling InternalApi.ping: " + e.Message );
-            }
-        }
-    }
-}
-
-                                                    </code></pre>
-                                                </div>
-
-
-                                                <div class="tab-pane" id="examples-Internal-ping-0-php">
-                                                  <pre class="prettyprint"><code class="language-php">
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-// Configure API key authorization: apiKey
-io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
-// Configure API key authorization: appId
-io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-APP-ID', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-APP-ID', 'Bearer');
-
-$api_instance = new io.swagger.client\Api\InternalApi();
-
-try {
-    $result = $api_instance->ping();
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling InternalApi->ping: ', $e->getMessage(), PHP_EOL;
-}
-
-                                                  </code></pre>
-          </div>
-
-                                            </div>
-
-
-
-
-
-                                            <h2>Parameters</h2>
-
-
-
-
-
-
-
-
-
-                                            <h2>Responses</h2>
-
-                                                <h3> Status: 200 - session service is operating normal </h3>
-
-                                                <ul class="nav nav-tabs nav-tabs-examples" >
-
-                                                    <li class="active">
-                                                        <a href="#examples-Internal-ping-schema">Schema</a>
-                                                    </li>
-
-
-                                                </ul>
-
-
-
-
-
-
-
-                                                <div class="tab-content" style='margin-bottom: 10px;'>
-
-
-
-                                                    <div class="tab-pane active" id="examples-Internal-ping-schema">
-
-
-
-
-                                                        <div id='examples-Internal-ping-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-
-                                                            <script>
-                                                                $(document).ready(function() {
-                                                                    var schemaWrapper = {
-  "description" : "session service is operating normal",
-  "schema" : {
-    "$ref" : "#/definitions/PingResponseSuccess"
-  }
-};
-                                                                    var schema = schemaWrapper.schema;
-                                                                    schemaWrapper.definitions = defs;
-                                                                    //console.log(JSON.stringify(schema))
-                                                                    JsonRefs.resolveRefs(schemaWrapper, {
-                                                                        "depth": 3,
-                                                                        "resolveRemoteRefs": false,
-                                                                        "resolveFileRefs": false
-                                                                    }, function(err, resolved, metadata) {
-
-                                                                        //console.log(JSON.stringify(resolved));
-
-
-
-                                                                        var view = new JSONSchemaView(resolved.schema, 3);
-                                                                        $('#examples-Internal-ping-schema-data').val(JSON.stringify(resolved.schema));
-                                                                        var result = $('#examples-Internal-ping-schema-200');
-                                                                        result.empty();
-                                                                        result.append(view.render());
-                                                                    });
-
-
-
-
-                                                                });
-                                                            </script>
-                                                        </div>
-                                                        <input id='examples-Internal-ping-schema-data' type='hidden' value=''></input>
-
-
-
-
-
-
-                                                    </div>
-
-
-
-
-                                                </div>
-
-
-
-
-                                                <h3> Status: 403 - The client is not allowed to do this request. </h3>
-
-                                                <ul class="nav nav-tabs nav-tabs-examples" >
-
-                                                    <li class="active">
-                                                        <a href="#examples-Internal-ping-schema">Schema</a>
-                                                    </li>
-
-
-                                                </ul>
-
-
-
-
-
-
-
-                                                <div class="tab-content" style='margin-bottom: 10px;'>
-
-
-
-                                                    <div class="tab-pane active" id="examples-Internal-ping-schema">
-
-
-
-
-                                                        <div id='examples-Internal-ping-schema-403' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-
-                                                            <script>
-                                                                $(document).ready(function() {
-                                                                    var schemaWrapper = {
-  "description" : "The client is not allowed to do this request."
-};
-                                                                    var schema = schemaWrapper.schema;
-                                                                    schemaWrapper.definitions = defs;
-                                                                    //console.log(JSON.stringify(schema))
-                                                                    JsonRefs.resolveRefs(schemaWrapper, {
-                                                                        "depth": 3,
-                                                                        "resolveRemoteRefs": false,
-                                                                        "resolveFileRefs": false
-                                                                    }, function(err, resolved, metadata) {
-
-                                                                        //console.log(JSON.stringify(resolved));
-
-
-
-                                                                        var view = new JSONSchemaView(resolved.schema, 3);
-                                                                        $('#examples-Internal-ping-schema-data').val(JSON.stringify(resolved.schema));
-                                                                        var result = $('#examples-Internal-ping-schema-403');
-                                                                        result.empty();
-                                                                        result.append(view.render());
-                                                                    });
-
-
-
-
-                                                                });
-                                                            </script>
-                                                        </div>
-                                                        <input id='examples-Internal-ping-schema-data' type='hidden' value=''></input>
-
-
-
-
-
-
-                                                    </div>
-
-
-
-
-                                                </div>
-
-
-
-
-                                                <h3> Status: 503 - service or storage is unavailable (or both). check the response details. </h3>
-
-                                                <ul class="nav nav-tabs nav-tabs-examples" >
-
-                                                    <li class="active">
-                                                        <a href="#examples-Internal-ping-schema">Schema</a>
-                                                    </li>
-
-
-                                                </ul>
-
-
-
-
-
-
-
-                                                <div class="tab-content" style='margin-bottom: 10px;'>
-
-
-
-                                                    <div class="tab-pane active" id="examples-Internal-ping-schema">
-
-
-
-
-                                                        <div id='examples-Internal-ping-schema-503' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-
-                                                            <script>
-                                                                $(document).ready(function() {
-                                                                    var schemaWrapper = {
-  "description" : "service or storage is unavailable (or both). check the response details.",
-  "schema" : {
-    "$ref" : "#/definitions/PingResponseFailure"
-  }
-};
-                                                                    var schema = schemaWrapper.schema;
-                                                                    schemaWrapper.definitions = defs;
-                                                                    //console.log(JSON.stringify(schema))
-                                                                    JsonRefs.resolveRefs(schemaWrapper, {
-                                                                        "depth": 3,
-                                                                        "resolveRemoteRefs": false,
-                                                                        "resolveFileRefs": false
-                                                                    }, function(err, resolved, metadata) {
-
-                                                                        //console.log(JSON.stringify(resolved));
-
-
-
-                                                                        var view = new JSONSchemaView(resolved.schema, 3);
-                                                                        $('#examples-Internal-ping-schema-data').val(JSON.stringify(resolved.schema));
-                                                                        var result = $('#examples-Internal-ping-schema-503');
-                                                                        result.empty();
-                                                                        result.append(view.render());
-                                                                    });
-
-
-
-
-                                                                });
-                                                            </script>
-                                                        </div>
-                                                        <input id='examples-Internal-ping-schema-data' type='hidden' value=''></input>
-
-
-
-
-
-
-                                                    </div>
-
-
-
-
-                                                </div>
-
-
-
-
-
-
-
-
-
-                                        </article>
-
-                                    </div>
-
-                                    <hr>
-
-
-
-
-
-
-
-
                                     <div id="api-Internal-updateSession">
 
                                         <article id="api-Internal-updateSession-0" data-group="User" data-name="updateSession" data-version="0">
@@ -3668,7 +3936,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-10-05T09:10:50.069Z
+                    Generated 2017-10-05T13:26:55.215Z
                 </div>
             </div>
         </div>
