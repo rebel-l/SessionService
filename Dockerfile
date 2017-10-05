@@ -39,6 +39,6 @@ RUN echo "" >> /root/.bashrc && \
 COPY ./scripts/docker-entrypoint.sh ./docker-entrypoint
 RUN chmod 755 ./docker-entrypoint
 
-EXPOSE 8080
+EXPOSE 4000
 
 ENTRYPOINT ["./docker-entrypoint"]
