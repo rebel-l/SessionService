@@ -102,3 +102,9 @@ pushing anything to this repository you can quickly check everything by executin
 ```bash
 ./scripts/build.sh
 ```
+
+# API Documentation
+You find actual version of the API documentation in the _/docs/indext.html_ file of this repository or as an online 
+version on [Swagger hub](https://app.swaggerhub.com/apis/rebel-l/SessionService).
+
+The swagger file itself can be also found as YAML version in the _/docs_ subfolder of this repository.
