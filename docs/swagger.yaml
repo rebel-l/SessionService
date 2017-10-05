@@ -18,10 +18,12 @@ info:
 
 # tags are used for organizing operations
 tags:
+- name: external
+  description: external calls
 - name: internal
   description: secure internal calls
 consumes: ['application/json']
-produces: ['application/json']
+produces: ['application/json', 'text/html']
 schemes:
 - https
 - http
@@ -36,15 +38,24 @@ securityDefinitions:
     type: apiKey
     in: header
     name: X-APP-ID
-security:
-  - apiKey: []
-  - appId: []
-  
+
 paths:
+  /docs:
+    get:
+      tags:
+      - external
+      operationId: docs
+      summary: Endpoint to this documentation.
+      description: This is the endpoint to get this documentation.
+      produces:
+      - text/html
+      responses:
+        200:
+          description: Sends the html for the documentation.
   /ping:
     get:
       tags:
-      - internal
+      - external
       operationId: ping
       summary: Quick check if service is operating.
       description: |
@@ -64,6 +75,9 @@ paths:
             $ref: '#/definitions/PingResponseFailure'
   /session:
     get:
+      security:
+      - apiKey: []
+      - appId: []
       tags:
       - internal
       summary: Returns a session for a specific id.
@@ -110,6 +124,9 @@ paths:
         404:
           description: session was not found or has expired
     put:
+      security:
+      - apiKey: []
+      - appId: []    
       tags:
       - internal
       summary: updates a session
@@ -141,6 +158,9 @@ paths:
         404:
           description: session was not found or has expired
     delete:
+      security:
+      - apiKey: []
+      - appId: []    
       tags:
       - internal
       summary: deletes a session
