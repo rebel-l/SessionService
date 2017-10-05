@@ -4,7 +4,7 @@ services:
     container_name: sessionservice
     build: .
     ports:
-      - "8080:8080"
+      - "4000:4000"
     volumes:
       - .:/workspace/src/github.com/rebel-l/sessionservice
     links:
