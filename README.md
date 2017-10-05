@@ -108,3 +108,6 @@ You find actual version of the API documentation in the _/docs/indext.html_ file
 version on [Swagger hub](https://app.swaggerhub.com/apis/rebel-l/SessionService).
 
 The swagger file itself can be also found as YAML version in the _/docs_ subfolder of this repository.
+
+If the service is released you can also open http://servicedomain/docs/, e.g. on the vagrant development environment it is
+http://session.dev:4000/docs/. 
