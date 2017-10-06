@@ -13,12 +13,12 @@ func TestDefaultValues(t *testing.T) {
 
 func TestServiceOnline(t *testing.T)  {
 	ps := NewPingSummary()
-	ps.ServiceOnline()
+	ps.TurnServiceOnline()
 	assert.Equal(t, PONG, ps.Service(), "As the service is turned online it should be set to " + PONG)
 }
 
 func TestStorageOnline(t *testing.T)  {
 	ps := NewPingSummary()
-	ps.StorageOnline()
+	ps.TurnStorageOnline()
 	assert.Equal(t, PONG, ps.Storage(), "As the storage is turned online it should be set to " + PONG)
 }
