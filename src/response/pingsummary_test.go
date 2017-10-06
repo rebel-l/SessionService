@@ -25,13 +25,13 @@ func TestPingSummaryStorageOnline(t *testing.T)  {
 }
 
 func TestPingSummaryJsonEncoding(t *testing.T) {
-	cases := dataProviderPingSummaryJsonEncoding()
+	cases := pingSummaryDataProviderJsonEncoding()
 	for _, c := range cases {
 		assert.Equal(t, c.expected, pingSummaryJsonEncode(c.actual), "The JSON encoded struct is not matching")
 	}
 }
 
-func dataProviderPingSummaryJsonEncoding() []pingSummaryTestDataJson {
+func pingSummaryDataProviderJsonEncoding() []pingSummaryTestDataJson {
 	psOn := NewPingSummary()
 	psOn.TurnServiceOnline()
 	psOn.TurnStorageOnline()
