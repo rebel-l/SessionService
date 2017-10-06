@@ -1,8 +1,8 @@
 package response
 
 type PingSummary struct {
-	service,
-	storage string
+	Service,
+	Storage string
 }
 
 func NewPingSummary() *PingSummary {
@@ -10,18 +10,10 @@ func NewPingSummary() *PingSummary {
 	return ps
 }
 
-func (ps *PingSummary) Service () string {
-	return ps.service
-}
-
-func (ps *PingSummary) Storage () string {
-	return ps.storage
-}
-
 func (ps *PingSummary) TurnServiceOnline() {
-	ps.service = PONG
+	ps.Service = PONG
 }
 
 func (ps *PingSummary) TurnStorageOnline() {
-	ps.storage = PONG
+	ps.Storage = PONG
 }
