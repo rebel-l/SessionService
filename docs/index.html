@@ -739,27 +739,27 @@ margin-bottom: 20px;
 };
   defs.PingResponseFailure = {
   "type" : "object",
-  "required" : [ "success" ],
+  "required" : [ "Success" ],
   "properties" : {
-    "success" : {
+    "Success" : {
       "type" : "string",
       "format" : "^OK|FAIL$",
       "example" : "FAIL"
     },
-    "summary" : {
-      "$ref" : "#/definitions/PingResponseFailure_summary"
+    "Summary" : {
+      "$ref" : "#/definitions/PingResponseFailure_Summary"
     }
   }
 };
-  defs.PingResponseFailure_summary = {
-  "required" : [ "service", "storage" ],
+  defs.PingResponseFailure_Summary = {
+  "required" : [ "Service", "Storage" ],
   "properties" : {
-    "service" : {
+    "Service" : {
       "type" : "string",
       "format" : "",
       "example" : ""
     },
-    "storage" : {
+    "Storage" : {
       "type" : "string",
       "format" : "^(PONG)*$",
       "example" : ""
@@ -768,27 +768,27 @@ margin-bottom: 20px;
 };
   defs.PingResponseSuccess = {
   "type" : "object",
-  "required" : [ "success" ],
+  "required" : [ "Success" ],
   "properties" : {
-    "success" : {
+    "Success" : {
       "type" : "string",
       "format" : "^OK|FAIL$",
       "example" : "OK"
     },
-    "summary" : {
-      "$ref" : "#/definitions/PingResponseSuccess_summary"
+    "Summary" : {
+      "$ref" : "#/definitions/PingResponseSuccess_Summary"
     }
   }
 };
-  defs.PingResponseSuccess_summary = {
-  "required" : [ "service", "storage" ],
+  defs.PingResponseSuccess_Summary = {
+  "required" : [ "Service", "Storage" ],
   "properties" : {
-    "service" : {
+    "Service" : {
       "type" : "string",
       "format" : "^(PONG)*$",
       "example" : "PONG"
     },
-    "storage" : {
+    "Storage" : {
       "type" : "string",
       "format" : "^(PONG)*$",
       "example" : "PONG"
@@ -3936,7 +3936,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-10-05T13:26:55.215Z
+                    Generated 2017-10-06T23:31:31.943Z
                 </div>
             </div>
         </div>
