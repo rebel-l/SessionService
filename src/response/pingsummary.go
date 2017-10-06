@@ -18,10 +18,10 @@ func (ps *PingSummary) Storage () string {
 	return ps.storage
 }
 
-func (ps *PingSummary) ServiceOnline() {
+func (ps *PingSummary) TurnServiceOnline() {
 	ps.service = PONG
 }
 
-func (ps *PingSummary) StorageOnline() {
+func (ps *PingSummary) TurnStorageOnline() {
 	ps.storage = PONG
 }
