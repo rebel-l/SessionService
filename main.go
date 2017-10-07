@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/response"
+	"github.com/rebel-l/sessionservice/src/endpoint"
 	"log"
 	"net/http"
 	"encoding/json"
@@ -45,7 +46,7 @@ func main() {
 	// start to serve
 	if *runServer {
 		fmt.Println("Static Server ...")
-		serveStatic()
+		serve()
 		fmt.Println("")
 	}
 }
@@ -83,9 +84,8 @@ func pingExample(ps *response.PingSummary) {
 	fmt.Println("")
 }
 
-func serveStatic() {
-	fs := http.FileServer(http.Dir("docs"))
-	http.Handle("/docs/", http.StripPrefix("/docs/", fs))
+func serve() {
+	endpoint.InitDocsEndpoint()
 	log.Printf("\tListening ...")
 	err := http.ListenAndServe(":4000", nil)
 	if  err != nil {
