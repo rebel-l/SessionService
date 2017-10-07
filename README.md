@@ -37,7 +37,7 @@ docker-compose exec sessionservice ./docker-entrypoint
 
 On the command line of the docker container you can now find all the projects data at:
 ```bash
-cd /vagrant
+cdproj
 ```
 
 ### Docker Way
@@ -53,7 +53,7 @@ docker run -it -p 4000:4000 --name sessionservice -v /vagrant/:/workspace/src/gi
 
 On the command line of the docker container you can now find all the projects data at:
 ```bash
-cd /vagrant
+cdproj
 ```
 
 The Golang compiler should be able to execute from everywhere. You can check that by:
