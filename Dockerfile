@@ -26,6 +26,7 @@ RUN curl -o ./go.tar.gz https://storage.googleapis.com/golang/go${GOVERSION}.lin
     export PATH=$PATH:$GOPATH/bin && \
     go get -u github.com/alecthomas/gometalinter && \
     gometalinter --install && \
+    go get github.com/Masterminds/glide && \
     go get github.com/tools/godep
 
 # .profile

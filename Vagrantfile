@@ -36,6 +36,7 @@ Vagrant.configure("2") do |config|
             chef.environment = "development"
             chef.add_recipe "GolangCompiler"
             chef.add_recipe "Redis::tools"
+            chef.add_recipe "Php::composer"
 
             # You may also specify custom JSON attributes:
             chef.json = {

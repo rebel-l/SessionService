@@ -1,0 +1,23 @@
+package: github.com/rebel-l/sessionservice
+homepage: https://github.com/rebel-l/sessionservice
+license: GPL-3.0
+owners:
+- name: Rebel L
+  email: dj@rebel-l.net
+  homepage: https://github.com/rebel-l
+import:
+- package: github.com/go-redis/redis
+  version: 9c20773cb24624a4ad05cddb60583b61f4ffa701
+  subpackages:
+  - internal
+  - internal/consistenthash
+  - internal/hashtag
+  - internal/pool
+  - internal/proto
+- package: github.com/sirupsen/logrus
+  version: ~1.0.3
+testImport:
+- package: github.com/stretchr/testify
+  version: ~1.1.4
+  subpackages:
+  - assert
