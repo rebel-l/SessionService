@@ -14,26 +14,10 @@ func main() {
 	fmt.Println("")
 
 	// response.PingSummary
-	fmt.Println("resonse.PingSummary ...")
-	ps := response.NewPingSummary()
-	fmt.Printf("\tStruct (Before): %#v\n", ps)
-	ps.TurnServiceOnline()
-	fmt.Printf("\tService Online: %s\n", ps.Service)
-	ps.TurnStorageOnline()
-	fmt.Printf("\tStorage Online: %s\n", ps.Storage)
-	fmt.Printf("\tStruct (After): %#v\n", ps)
-	res, _ := json.Marshal(ps)
-	fmt.Printf("\tJSON Output %s\n", string(res))
-	fmt.Println("")
+	ps := pingSummaryExample()
 
 	// response.Ping
-	fmt.Println("response.Ping ...")
-	p := response.NewPing()
-	fmt.Printf("\tPing Struct (Before): %#v\n", p)
-	p.Summary = ps
-	p.Notify()
-	fmt.Printf("\tPing Struct (After): %#v\n", p)
-	fmt.Println("")
+	pingExample(ps)
 
 	// parse the flags
 	fmt.Println("Parse flags ...")
@@ -45,11 +29,7 @@ func main() {
 	fmt.Println("")
 
 	// print some texts
-	fmt.Println("Print some examples ...")
-	a := multiply(6,7)
-	fmt.Printf("\tHello World\n")
-	fmt.Printf("\t6 x 7 is %d\n", a)
-	fmt.Println("")
+	examples()
 
 	// do some redis operations if redis flag is set
 	if *runRedis {
@@ -68,6 +48,39 @@ func main() {
 		serveStatic()
 		fmt.Println("")
 	}
+}
+
+func examples() {
+	fmt.Println("Print some examples ...")
+	a := multiply(6,7)
+	fmt.Printf("\tHello World\n")
+	fmt.Printf("\t6 x 7 is %d\n", a)
+	fmt.Println("")
+}
+
+func pingSummaryExample() *response.PingSummary {
+	fmt.Println("resonse.PingSummary ...")
+	ps := response.NewPingSummary()
+	fmt.Printf("\tStruct (Before): %#v\n", ps)
+	ps.TurnServiceOnline()
+	fmt.Printf("\tService Online: %s\n", ps.Service)
+	ps.TurnStorageOnline()
+	fmt.Printf("\tStorage Online: %s\n", ps.Storage)
+	fmt.Printf("\tStruct (After): %#v\n", ps)
+	res, _ := json.Marshal(ps)
+	fmt.Printf("\tJSON Output %s\n", string(res))
+	fmt.Println("")
+	return ps
+}
+
+func pingExample(ps *response.PingSummary) {
+	fmt.Println("response.Ping ...")
+	p := response.NewPing()
+	fmt.Printf("\tPing Struct (Before): %#v\n", p)
+	p.Summary = ps
+	p.Notify()
+	fmt.Printf("\tPing Struct (After): %#v\n", p)
+	fmt.Println("")
 }
 
 func serveStatic() {
