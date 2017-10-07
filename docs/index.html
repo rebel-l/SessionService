@@ -756,7 +756,7 @@ margin-bottom: 20px;
   "properties" : {
     "Service" : {
       "type" : "string",
-      "format" : "",
+      "format" : "^(PONG)*$",
       "example" : ""
     },
     "Storage" : {
@@ -1516,82 +1516,6 @@ try {
                                                                         var view = new JSONSchemaView(resolved.schema, 3);
                                                                         $('#examples-External-ping-schema-data').val(JSON.stringify(resolved.schema));
                                                                         var result = $('#examples-External-ping-schema-200');
-                                                                        result.empty();
-                                                                        result.append(view.render());
-                                                                    });
-
-
-
-
-                                                                });
-                                                            </script>
-                                                        </div>
-                                                        <input id='examples-External-ping-schema-data' type='hidden' value=''></input>
-
-
-
-
-
-
-                                                    </div>
-
-
-
-
-                                                </div>
-
-
-
-
-                                                <h3> Status: 403 - The client is not allowed to do this request. </h3>
-
-                                                <ul class="nav nav-tabs nav-tabs-examples" >
-
-                                                    <li class="active">
-                                                        <a href="#examples-External-ping-schema">Schema</a>
-                                                    </li>
-
-
-                                                </ul>
-
-
-
-
-
-
-
-                                                <div class="tab-content" style='margin-bottom: 10px;'>
-
-
-
-                                                    <div class="tab-pane active" id="examples-External-ping-schema">
-
-
-
-
-                                                        <div id='examples-External-ping-schema-403' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-
-                                                            <script>
-                                                                $(document).ready(function() {
-                                                                    var schemaWrapper = {
-  "description" : "The client is not allowed to do this request."
-};
-                                                                    var schema = schemaWrapper.schema;
-                                                                    schemaWrapper.definitions = defs;
-                                                                    //console.log(JSON.stringify(schema))
-                                                                    JsonRefs.resolveRefs(schemaWrapper, {
-                                                                        "depth": 3,
-                                                                        "resolveRemoteRefs": false,
-                                                                        "resolveFileRefs": false
-                                                                    }, function(err, resolved, metadata) {
-
-                                                                        //console.log(JSON.stringify(resolved));
-
-
-
-                                                                        var view = new JSONSchemaView(resolved.schema, 3);
-                                                                        $('#examples-External-ping-schema-data').val(JSON.stringify(resolved.schema));
-                                                                        var result = $('#examples-External-ping-schema-403');
                                                                         result.empty();
                                                                         result.append(view.render());
                                                                     });
@@ -3936,7 +3860,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-10-06T23:31:31.943Z
+                    Generated 2017-10-07T17:38:10.556Z
                 </div>
             </div>
         </div>
