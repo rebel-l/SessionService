@@ -86,6 +86,7 @@ func pingExample(ps *response.PingSummary) {
 
 func serve() {
 	endpoint.InitDocsEndpoint()
+	endpoint.InitPing()
 	log.Printf("\tListening ...")
 	err := http.ListenAndServe(":4000", nil)
 	if  err != nil {
