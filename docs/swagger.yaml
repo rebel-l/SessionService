@@ -67,8 +67,6 @@ paths:
           description: session service is operating normal
           schema:
             $ref: '#/definitions/PingResponseSuccess'
-        403:
-          description: The client is not allowed to do this request.
         503: 
           description: service or storage is unavailable (or both). check the response details.
           schema:
@@ -231,7 +229,7 @@ definitions:
         properties:
           Service:
             type: string
-            format: ""
+            format: ^(PONG)*$
             example: ""
           Storage:
             type: string
