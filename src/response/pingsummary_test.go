@@ -36,8 +36,8 @@ func pingSummaryDataProviderJsonEncoding() []pingSummaryTestDataJson {
 	psOn.TurnServiceOnline()
 	psOn.TurnStorageOnline()
 	return []pingSummaryTestDataJson{
-		{"{\"Service\":\"\",\"Storage\":\"\"}", NewPingSummary()},
-		{"{\"Service\":\"PONG\",\"Storage\":\"PONG\"}", psOn},
+		{"{\"service\":\"\",\"storage\":\"\"}", NewPingSummary()},
+		{"{\"service\":\"PONG\",\"storage\":\"PONG\"}", psOn},
 	}
 }
 

@@ -1,8 +1,8 @@
 package response
 
 type Ping struct {
-	Success string
-	Summary *PingSummary
+	Success string `json:"success"`
+	Summary *PingSummary `json:"summary"`
 }
 
 func newPing(ps *PingSummary) *Ping {
