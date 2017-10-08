@@ -15,6 +15,7 @@ type Config struct {
 func newConfig(filename string) *Config {
 	c := new(Config)
 	c.Service = newService()
+	c.Redis = new(redis.Options)
 	err := c.loadFromFile(filename)
 	if err != nil {
 		log.Infof(
