@@ -2,6 +2,7 @@ package endpoint
 
 import (
 	"encoding/json"
+	"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/response"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -13,14 +14,16 @@ const contentType = "application/json"
 type Ping struct {
 	response *response.Ping
 	observer []response.Observer
+	redisClient *redis.Client
 }
 
-func InitPing() {
+func InitPing(redisClient *redis.Client) {
 	log.Debug("Ping endpoint: Init ...")
 
 	p := new(Ping)
 	p.response = response.NewPing()
 	p.observer = append(p.observer, p.response)
+	p.redisClient = redisClient
 	http.HandleFunc("/ping/", p.handler)
 
 	log.Debug("Ping endpoint: initialized!")
@@ -51,8 +54,13 @@ func (p *Ping) checkService() {
 }
 
 func (p *Ping) checkStorage() {
-	// TODO: implement redis ping here ...
-	p.response.Summary.TurnStorageOnline()
+	pong, err := p.redisClient.Ping().Result()
+	if err != nil {
+		log.Errorf("Redis storage is not available: %s", err)
+	} else {
+		log.Debugf("Redis Ping responded with %s", pong)
+		p.response.Summary.TurnStorageOnline()
+	}
 	p.notify()
 }
 
