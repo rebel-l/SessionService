@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	//"github.com/go-redis/redis"
+	"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/endpoint"
 	//"github.com/rebel-l/sessionservice/src/response"
@@ -16,24 +16,19 @@ import (
 func main() {
 	fmt.Println("")
 
+	// init config & logging
+	config := configuration.Init()
+	initLogging(config.Service.LogLevel)
 	// response.PingSummary
 	//ps := pingSummaryExample()
 
 	// response.Ping
 	//pingExample(ps)
 
-	// init config
-	//fmt.Println("Config init ...")
-	config := configuration.Init()
-	initLogging(config.Service.LogLevel)
-	//fmt.Printf("\tConfig.Service: %#v\n", config.Service)
-	//fmt.Printf("\tConfig.Redis: %#v\n", config.Redis)
-	//fmt.Println("")
 
 	// do some redis operations if redis flag is set
 	//if *runRedis {
 	//	fmt.Println("Redis ...")
-	//	redisPing()
 	//	setEntry("name", "Lars")
 	//	setEntry("age", "29")
 	//	fmt.Printf("\tHello %s!\n", getEntry("name"))
@@ -44,7 +39,7 @@ func main() {
 	// start to serve
 	//if *runServer {
 	//	fmt.Println("Static Server ...")
-		serve(*config.Service)
+		serve(*config)
 	//	fmt.Println("")
 	//}
 }
@@ -79,30 +74,20 @@ func initLogging(loglevel log.Level) {
 //	fmt.Println("")
 //}
 
-func serve(config configuration.Service) {
+func serve(config configuration.Config) {
+	client := redis.NewClient(config.Redis)
+
+	// init endpoints
 	endpoint.InitDocsEndpoint()
-	endpoint.InitPing()
-	log.Infof("Listening on port %d ...", config.Port)
-	err := http.ListenAndServe(":" + strconv.Itoa(config.Port), nil)
+	endpoint.InitPing(client)
+
+	// run the service
+	log.Infof("Listening on port %d ...", config.Service.Port)
+	err := http.ListenAndServe(":" + strconv.Itoa(config.Service.Port), nil)
 	if  err != nil {
 		log.Panicf("Couldn't start server. Error: %s", err)
 	}
 }
-
-//func getRedisClient() *redis.Client {
-//	client := redis.NewClient(&redis.Options{
-//		Addr: "redis:6379",
-//		Password: "",
-//		DB: 0,
-//	})
-//
-//	return client
-//}
-
-//func redisPing() {
-//	pong, err := getRedisClient().Ping().Result()
-//	fmt.Println(pong, err)
-//}
 
 //func setEntry(key string, value string) {
 //	err := getRedisClient().Set(key, value, 0)
