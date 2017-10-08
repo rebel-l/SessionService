@@ -9,7 +9,7 @@ type Service struct {
 
 func newService() *Service {
 	s := new(Service)
-	s.Port = ServiceDeafultPort
+	s.Port = ServiceDefaultPort
 	s.LogLevel = ServiceDefaultLogLevel
 	return s
 }
