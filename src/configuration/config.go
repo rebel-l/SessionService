@@ -10,10 +10,12 @@ import (
 type Config struct {
 	Service *Service
 	Redis *redis.Options
+	openFile func(string)(*os.File, error)
 }
 
 func newConfig(filename string) *Config {
 	c := new(Config)
+	c.openFile = os.Open
 	c.Service = newService()
 	c.Redis = new(redis.Options)
 	err := c.loadFromFile(filename)
@@ -33,7 +35,7 @@ func (c *Config) loadFromFile(filename string) error {
 	}
 
 	log.Infof("Load config filename: %s", filename)
-	file, err := os.Open(filename)
+	file, err := c.openFile(filename)
 	if err != nil {
 		return err
 	}
