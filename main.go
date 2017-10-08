@@ -1,11 +1,11 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"github.com/go-redis/redis"
-	"github.com/rebel-l/sessionservice/src/response"
+	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/endpoint"
+	"github.com/rebel-l/sessionservice/src/response"
 	"log"
 	"net/http"
 	"encoding/json"
@@ -21,42 +21,38 @@ func main() {
 	pingExample(ps)
 
 	// parse the flags
-	fmt.Println("Parse flags ...")
-	runRedis := flag.Bool("redis", false, "execute redis operations")
-	runServer := flag.Bool("server", false, "execute server listening")
-	flag.Parse()
-	fmt.Printf("\tRun Redis: %t\n", *runRedis)
-	fmt.Printf("\tRun Server: %t\n", *runServer)
-	fmt.Println("")
+	//fmt.Println("Parse flags ...")
+	//runRedis := flag.Bool("redis", false, "execute redis operations")
+	//runServer := flag.Bool("server", false, "execute server listening")
+	//flag.Parse()
+	//fmt.Printf("\tRun Redis: %t\n", *runRedis)
+	//fmt.Printf("\tRun Server: %t\n", *runServer)
+	//fmt.Println("")
 
-	// print some texts
-	examples()
+	// init config
+	fmt.Println("Config init ...")
+	config := configuration.Init()
+	fmt.Printf("\tConfig.Service: %#v\n", config.Service)
+	fmt.Printf("\tConfig.Redis: %#v\n", config.Redis)
+	fmt.Println("")
 
 	// do some redis operations if redis flag is set
-	if *runRedis {
-		fmt.Println("Redis ...")
-		redisPing()
-		setEntry("name", "Lars")
-		setEntry("age", "29")
-		fmt.Printf("\tHello %s!\n", getEntry("name"))
-		fmt.Printf("\tYou are %s years old!\n", getEntry("age"))
-		fmt.Println("")
-	}
+	//if *runRedis {
+	//	fmt.Println("Redis ...")
+	//	redisPing()
+	//	setEntry("name", "Lars")
+	//	setEntry("age", "29")
+	//	fmt.Printf("\tHello %s!\n", getEntry("name"))
+	//	fmt.Printf("\tYou are %s years old!\n", getEntry("age"))
+	//	fmt.Println("")
+	//}
 
 	// start to serve
-	if *runServer {
-		fmt.Println("Static Server ...")
-		serve()
-		fmt.Println("")
-	}
-}
-
-func examples() {
-	fmt.Println("Print some examples ...")
-	a := multiply(6,7)
-	fmt.Printf("\tHello World\n")
-	fmt.Printf("\t6 x 7 is %d\n", a)
-	fmt.Println("")
+	//if *runServer {
+	//	fmt.Println("Static Server ...")
+	//	serve()
+	//	fmt.Println("")
+	//}
 }
 
 func pingSummaryExample() *response.PingSummary {
@@ -92,10 +88,6 @@ func serve() {
 	if  err != nil {
 		panic(err)
 	}
-}
-
-func multiply(a int, b int) int {
-	return a * b
 }
 
 func getRedisClient() *redis.Client {
