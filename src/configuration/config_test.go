@@ -1,13 +1,17 @@
 package configuration
 
 import (
-	//"encoding/json"
+	"errors"
 	"github.com/go-redis/redis"
 	"github.com/stretchr/testify/assert"
-	"testing"
+	log "github.com/sirupsen/logrus"
 	"os"
-	"errors"
+	"testing"
 )
+
+func TestInit(t *testing.T) {
+	log.SetLevel(0)
+}
 
 func TestConfigDefault(t *testing.T) {
 	c := newConfig("")
@@ -37,6 +41,21 @@ func TestConfigLoadFileUnhappy(t *testing.T) {
 	assert.Equal(t, f.err, err, "Expected that method is returning the error message")
 }
 
-// TODO Test the loadFromFile method with (happy/unhappy) mocked JSON decoder, mocked File
+func TestConfigLoadFileHappy(t *testing.T) {
+	filename := os.Getenv("GOPATH")
+	filename += "/src/github.com/rebel-l/sessionservice/testFixtures/configuration/config/happy.json"
+	c := newConfig(filename)
+	assert.Equal(t, 333, c.Service.Port, "Port was not correctly loaded from file")
+	assert.Equal(t, 5, int(c.Service.LogLevel), "Loglevel was not correctly loaded from file")
+	assert.Equal(t, "redis:6379", c.Redis.Addr, "Redis host was not correctly loaded from file")
+	assert.Equal(t, "1234", c.Redis.Password, "Redis password was not correctly loaded from file")
+	assert.Equal(t, 0, c.Redis.DB, "Redis DB was not correctly loaded from file")
+}
 
-
+func TestConfigDecodeUnhappy(t *testing.T) {
+	filename := os.Getenv("GOPATH")
+	filename += "/src/github.com/rebel-l/sessionservice/testFixtures/configuration/config/unhappy.json"
+	c := newConfig("")
+	err := c.loadFromFile(filename)
+	assert.Equal(t, "EOF", err.Error(), "Decode should fail on malformed JSON")
+}
