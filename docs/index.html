@@ -739,27 +739,27 @@ margin-bottom: 20px;
 };
   defs.PingResponseFailure = {
   "type" : "object",
-  "required" : [ "Success" ],
+  "required" : [ "success" ],
   "properties" : {
-    "Success" : {
+    "success" : {
       "type" : "string",
       "format" : "^OK|FAIL$",
       "example" : "FAIL"
     },
-    "Summary" : {
-      "$ref" : "#/definitions/PingResponseFailure_Summary"
+    "summary" : {
+      "$ref" : "#/definitions/PingResponseFailure_summary"
     }
   }
 };
-  defs.PingResponseFailure_Summary = {
-  "required" : [ "Service", "Storage" ],
+  defs.PingResponseFailure_summary = {
+  "required" : [ "service", "storage" ],
   "properties" : {
-    "Service" : {
+    "service" : {
       "type" : "string",
       "format" : "^(PONG)*$",
       "example" : ""
     },
-    "Storage" : {
+    "storage" : {
       "type" : "string",
       "format" : "^(PONG)*$",
       "example" : ""
@@ -768,27 +768,27 @@ margin-bottom: 20px;
 };
   defs.PingResponseSuccess = {
   "type" : "object",
-  "required" : [ "Success" ],
+  "required" : [ "success" ],
   "properties" : {
-    "Success" : {
+    "success" : {
       "type" : "string",
       "format" : "^OK|FAIL$",
       "example" : "OK"
     },
-    "Summary" : {
-      "$ref" : "#/definitions/PingResponseSuccess_Summary"
+    "summary" : {
+      "$ref" : "#/definitions/PingResponseSuccess_summary"
     }
   }
 };
-  defs.PingResponseSuccess_Summary = {
-  "required" : [ "Service", "Storage" ],
+  defs.PingResponseSuccess_summary = {
+  "required" : [ "service", "storage" ],
   "properties" : {
-    "Service" : {
+    "service" : {
       "type" : "string",
       "format" : "^(PONG)*$",
       "example" : "PONG"
     },
-    "Storage" : {
+    "storage" : {
       "type" : "string",
       "format" : "^(PONG)*$",
       "example" : "PONG"
@@ -3860,7 +3860,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-10-07T17:38:10.556Z
+                    Generated 2017-10-08T12:32:11.117Z
                 </div>
             </div>
         </div>

@@ -62,8 +62,8 @@ func pingDataProviderJson() []pingData {
 	p.Notify()
 
 	return []pingData {
-		{"{\"Success\":\"FAIL\",\"Summary\":{\"Service\":\"\",\"Storage\":\"\"}}", NewPing()},
-		{"{\"Success\":\"OK\",\"Summary\":{\"Service\":\"PONG\",\"Storage\":\"PONG\"}}", p},
+		{"{\"success\":\"FAIL\",\"summary\":{\"service\":\"\",\"storage\":\"\"}}", NewPing()},
+		{"{\"success\":\"OK\",\"summary\":{\"service\":\"PONG\",\"storage\":\"PONG\"}}", p},
 	}
 }
 

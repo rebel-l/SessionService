@@ -190,48 +190,48 @@ definitions:
   PingResponseSuccess:
     type: object
     required: 
-    - Success
-    - Summary
+    - success
+    - summary
     properties:
-      Success:
+      success:
         type: string
         format: ^OK|FAIL$
         example: OK
-      Summary:
+      summary:
         type: object
         required: 
-        - Service
-        - Storage
+        - service
+        - storage
         properties:
-          Service:
+          service:
             type: string
             format: ^(PONG)*$
             example: PONG
-          Storage:
+          storage:
             type: string
             format: ^(PONG)*$
             example: PONG
   PingResponseFailure:
     type: object
     required: 
-    - Success
-    - Summary
+    - success
+    - summary
     properties:
-      Success:
+      success:
         type: string
         format: ^OK|FAIL$
         example: FAIL
-      Summary:
+      summary:
         type: object
         required: 
-        - Service
-        - Storage
+        - service
+        - storage
         properties:
-          Service:
+          service:
             type: string
             format: ^(PONG)*$
             example: ""
-          Storage:
+          storage:
             type: string
             format: ^(PONG)*$
             example: ""

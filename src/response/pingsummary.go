@@ -1,8 +1,8 @@
 package response
 
 type PingSummary struct {
-	Service,
-	Storage string
+	Service string `json:"service"`
+	Storage string `json:"storage"`
 }
 
 func NewPingSummary() *PingSummary {
