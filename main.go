@@ -2,39 +2,33 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-redis/redis"
+	//"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/endpoint"
-	"github.com/rebel-l/sessionservice/src/response"
-	"log"
+	//"github.com/rebel-l/sessionservice/src/response"
+	log "github.com/sirupsen/logrus"
 	"net/http"
-	"encoding/json"
+	//"encoding/json"
+	"strconv"
+
 )
 
 func main() {
 	fmt.Println("")
 
 	// response.PingSummary
-	ps := pingSummaryExample()
+	//ps := pingSummaryExample()
 
 	// response.Ping
-	pingExample(ps)
-
-	// parse the flags
-	//fmt.Println("Parse flags ...")
-	//runRedis := flag.Bool("redis", false, "execute redis operations")
-	//runServer := flag.Bool("server", false, "execute server listening")
-	//flag.Parse()
-	//fmt.Printf("\tRun Redis: %t\n", *runRedis)
-	//fmt.Printf("\tRun Server: %t\n", *runServer)
-	//fmt.Println("")
+	//pingExample(ps)
 
 	// init config
-	fmt.Println("Config init ...")
+	//fmt.Println("Config init ...")
 	config := configuration.Init()
-	fmt.Printf("\tConfig.Service: %#v\n", config.Service)
-	fmt.Printf("\tConfig.Redis: %#v\n", config.Redis)
-	fmt.Println("")
+	initLogging(config.Service.LogLevel)
+	//fmt.Printf("\tConfig.Service: %#v\n", config.Service)
+	//fmt.Printf("\tConfig.Redis: %#v\n", config.Redis)
+	//fmt.Println("")
 
 	// do some redis operations if redis flag is set
 	//if *runRedis {
@@ -50,73 +44,78 @@ func main() {
 	// start to serve
 	//if *runServer {
 	//	fmt.Println("Static Server ...")
-	//	serve()
+		serve(*config.Service)
 	//	fmt.Println("")
 	//}
 }
 
-func pingSummaryExample() *response.PingSummary {
-	fmt.Println("resonse.PingSummary ...")
-	ps := response.NewPingSummary()
-	fmt.Printf("\tStruct (Before): %#v\n", ps)
-	ps.TurnServiceOnline()
-	fmt.Printf("\tService Online: %s\n", ps.Service)
-	ps.TurnStorageOnline()
-	fmt.Printf("\tStorage Online: %s\n", ps.Storage)
-	fmt.Printf("\tStruct (After): %#v\n", ps)
-	res, _ := json.Marshal(ps)
-	fmt.Printf("\tJSON Output %s\n", string(res))
-	fmt.Println("")
-	return ps
+func initLogging(loglevel log.Level) {
+	log.SetLevel(loglevel)
+	log.Debug("Logging initialized")
 }
 
-func pingExample(ps *response.PingSummary) {
-	fmt.Println("response.Ping ...")
-	p := response.NewPing()
-	fmt.Printf("\tPing Struct (Before): %#v\n", p)
-	p.Summary = ps
-	p.Notify()
-	fmt.Printf("\tPing Struct (After): %#v\n", p)
-	fmt.Println("")
-}
+//func pingSummaryExample() *response.PingSummary {
+//	fmt.Println("resonse.PingSummary ...")
+//	ps := response.NewPingSummary()
+//	fmt.Printf("\tStruct (Before): %#v\n", ps)
+//	ps.TurnServiceOnline()
+//	fmt.Printf("\tService Online: %s\n", ps.Service)
+//	ps.TurnStorageOnline()
+//	fmt.Printf("\tStorage Online: %s\n", ps.Storage)
+//	fmt.Printf("\tStruct (After): %#v\n", ps)
+//	res, _ := json.Marshal(ps)
+//	fmt.Printf("\tJSON Output %s\n", string(res))
+//	fmt.Println("")
+//	return ps
+//}
 
-func serve() {
+//func pingExample(ps *response.PingSummary) {
+//	fmt.Println("response.Ping ...")
+//	p := response.NewPing()
+//	fmt.Printf("\tPing Struct (Before): %#v\n", p)
+//	p.Summary = ps
+//	p.Notify()
+//	fmt.Printf("\tPing Struct (After): %#v\n", p)
+//	fmt.Println("")
+//}
+
+func serve(config configuration.Service) {
 	endpoint.InitDocsEndpoint()
 	endpoint.InitPing()
-	log.Printf("\tListening ...")
-	err := http.ListenAndServe(":4000", nil)
+	log.Infof("Listening on port %d ...", config.Port)
+	err := http.ListenAndServe(":" + strconv.Itoa(config.Port), nil)
 	if  err != nil {
-		panic(err)
+		log.Panicf("Couldn't start server. Error: %s", err)
 	}
 }
 
-func getRedisClient() *redis.Client {
-	client := redis.NewClient(&redis.Options{
-		Addr: "redis:6379",
-		Password: "",
-		DB: 0,
-	})
+//func getRedisClient() *redis.Client {
+//	client := redis.NewClient(&redis.Options{
+//		Addr: "redis:6379",
+//		Password: "",
+//		DB: 0,
+//	})
+//
+//	return client
+//}
 
-	return client
-}
+//func redisPing() {
+//	pong, err := getRedisClient().Ping().Result()
+//	fmt.Println(pong, err)
+//}
 
-func redisPing() {
-	pong, err := getRedisClient().Ping().Result()
-	fmt.Println(pong, err)
-}
+//func setEntry(key string, value string) {
+//	err := getRedisClient().Set(key, value, 0)
+//	if err.Err() != nil {
+//		panic(err)
+//	}
+//}
 
-func setEntry(key string, value string) {
-	err := getRedisClient().Set(key, value, 0)
-	if err.Err() != nil {
-		panic(err)
-	}
-}
-
-func getEntry(key string) string {
-	result, err := getRedisClient().Get(key).Result()
-	if err != nil {
-		panic(err)
-	}
-
-	return result
-}
+//func getEntry(key string) string {
+//	result, err := getRedisClient().Get(key).Result()
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	return result
+//}
