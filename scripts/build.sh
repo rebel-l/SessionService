@@ -5,7 +5,7 @@ echo
 echo
 
 # Execute tests
-go test -v ./ ./src/***
+go test -v ./src/***
 EXITCODE=$?
 if [ $EXITCODE != 0 ]
 then
