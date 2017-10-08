@@ -6,9 +6,10 @@ import (
 )
 
 func InitDocsEndpoint()  {
-	log.SetLevel(log.DebugLevel)
 	log.Debug("Docs endpoint: Init ...")
+
 	fs := http.FileServer(http.Dir("docs"))
 	http.Handle("/docs/", http.StripPrefix("/docs/", fs))
+
 	log.Debug("Docs endpoint: initialized!")
 }
