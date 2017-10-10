@@ -10,7 +10,7 @@ import (
 
 const Version = "0.1.0"
 
-func Init() *Config {
+func Parse() *Config {
 	filename,
 	servicePort,
 	serviceLogLevel,
