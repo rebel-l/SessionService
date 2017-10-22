@@ -33,7 +33,7 @@ func (p *Ping) handler(res http.ResponseWriter, req *http.Request) {
 	log.Debug("Ping: request received ...")
 
 	// do the checks
-	p.checkService()
+	p.checkService() // ToDo: use go routines here?
 	p.checkStorage()
 
 	// send response
