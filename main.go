@@ -17,7 +17,8 @@ func main() {
 	fmt.Println("")
 
 	// init config & logging
-	config := configuration.Parse()
+	parser := configuration.GetParser()
+	config := parser.Parse()
 	initLogging(config.Service.LogLevel)
 	// response.PingSummary
 	//ps := pingSummaryExample()
