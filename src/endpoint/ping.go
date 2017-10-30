@@ -6,6 +6,8 @@ import (
 	"github.com/rebel-l/sessionservice/src/response"
 	log "github.com/sirupsen/logrus"
 	"net/http"
+	"sync"
+	"time"
 )
 
 const contentHeader = "Content-Type"
@@ -31,15 +33,19 @@ func InitPing(redisClient *redis.Client) {
 
 func (p *Ping) handler(res http.ResponseWriter, req *http.Request) {
 	log.Debug("Ping: request received ...")
+	start := time.Now()
+	wg := new(sync.WaitGroup)
+	wg.Add(2)
 
 	// do the checks
-	p.checkService() // ToDo: use go routines here?
-	p.checkStorage()
+	go p.checkService(wg)
+	go p.checkStorage(wg)
 
 	// send response
+	wg.Wait()
 	p.send(res)
-
-	log.Debug("Ping: response send!")
+	stop := time.Now()
+	log.Infof("Ping: response send! Duration: %s", (stop.Sub(start)).String())
 }
 
 func (p *Ping) notify()  {
@@ -48,12 +54,13 @@ func (p *Ping) notify()  {
 	}
 }
 
-func (p *Ping) checkService() {
+func (p *Ping) checkService(wg *sync.WaitGroup) {
 	p.response.Summary.TurnServiceOnline()
 	p.notify()
+	wg.Done()
 }
 
-func (p *Ping) checkStorage() {
+func (p *Ping) checkStorage(wg *sync.WaitGroup) {
 	pong, err := p.redisClient.Ping().Result()
 	if err != nil {
 		log.Errorf("Redis storage is not available: %s", err)
@@ -62,6 +69,7 @@ func (p *Ping) checkStorage() {
 		p.response.Summary.TurnStorageOnline()
 	}
 	p.notify()
+	wg.Done()
 }
 
 func (p *Ping) send(res http.ResponseWriter)  {
