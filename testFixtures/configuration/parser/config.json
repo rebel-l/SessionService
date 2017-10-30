@@ -1,0 +1,11 @@
+{
+  "Service": {
+    "Port": 333,
+    "LogLevel": 5
+  },
+  "Redis": {
+    "Addr": "redis:6379",
+    "Password": "1234",
+    "DB": 11
+  }
+}
