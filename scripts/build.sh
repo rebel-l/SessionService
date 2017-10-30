@@ -2,6 +2,11 @@
 echo
 echo -en "\E[40;36m\033[1mStart build SessionService\033[0m"
 echo
+if [ ! -z "$1" ]
+then
+	export REDISADDR=$1
+	echo "Redis Host: " $REDISADDR
+fi
 echo
 
 # Execute tests

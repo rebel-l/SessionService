@@ -4,9 +4,12 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/response"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"sync"
 	"testing"
 )
+
+var redisAddr = os.Getenv("REDISADDR")
 
 type ObserverMock struct {
 	counter int
@@ -33,7 +36,10 @@ func getPingWithObserverMockAndResponse() (p *Ping, o *ObserverMock) {
 func getPingWithObserverMockComplete() (p *Ping, o *ObserverMock) {
 	p, o = getPingWithObserverMockAndResponse()
 	redisOptions := new(redis.Options)
-	redisOptions.Addr = "redis:6379"
+	if redisAddr == "" {
+		redisAddr = "redis:6379"
+	}
+	redisOptions.Addr = redisAddr
 	p.redisClient = redis.NewClient(redisOptions)
 	return
 }
