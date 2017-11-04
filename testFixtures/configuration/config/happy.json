@@ -7,5 +7,13 @@
     "Addr": "redis:6379",
     "Password": "1234",
     "DB": 0
+  },
+  "AccountList": {
+    "MyApp": {
+      "ApiKey": "secretapitoken"
+    },
+    "OtherApp": {
+      "ApiKey": "secretapitoken2"
+    }
   }
 }
