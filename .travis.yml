@@ -4,7 +4,9 @@ go:
   - 1.9.x
 
 before_script:
+  - go version
   - go get github.com/Masterminds/glide
+  - glide -v
   - glide install
   - go get -u github.com/alecthomas/gometalinter
   - gometalinter --install

@@ -37,11 +37,15 @@ Vagrant.configure("2") do |config|
             chef.add_recipe "GolangCompiler"
             chef.add_recipe "Redis::tools"
             chef.add_recipe "Php::composer"
+            chef.add_recipe "NodeJs"
 
             # You may also specify custom JSON attributes:
             chef.json = {
                 'Golang' => {
                     'version' => '1.9'
+                },
+                'NodeJs' => {
+                    'version' => '8.8.1'
                 },
                 'System' => {
                     'Iptables' => {

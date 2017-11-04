@@ -1,0 +1,139 @@
+{
+	"info": {
+		"name": "SessionService",
+		"_postman_id": "04146e4c-62a5-ca6b-6b04-e08c77298b45",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ping",
+			"description": "ping endpoint",
+			"item": [
+				{
+					"name": "ping:GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 20ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(20);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is application/json\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.success).to.eql(\"OK\");\r",
+									"    pm.expect(jsonData.summary.service).to.eql(\"PONG\");\r",
+									"    pm.expect(jsonData.summary.storage).to.eql(\"PONG\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:4000/ping/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"ping",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "docs",
+			"description": "docs endpoint",
+			"item": [
+				{
+					"name": "docs:GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function() {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"response has body\", function() {",
+									"    pm.response.to.be.withBody;",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present and is text/html\", function() {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/html; charset=utf-8\");",
+									"});",
+									"",
+									"pm.test(\"response body contains html\", function() {",
+									"    var body = pm.response.text()",
+									"    pm.expect(body).to.include(\"<html>\")",
+									"    pm.expect(body).to.include(\"</html>\")",
+									"    pm.expect(body).to.include(\"<head>\")",
+									"    pm.expect(body).to.include(\"</head>\")",
+									"    pm.expect(body).to.include(\"<body>\")",
+									"    pm.expect(body).to.include(\"</body>\")",
+									"    pm.expect(body).to.include(\"<title>SessionService API</title>\")",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:4000/docs/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"docs",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

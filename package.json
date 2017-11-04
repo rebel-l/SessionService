@@ -1,0 +1,18 @@
+{
+  "name": "SessionService",
+  "version": "1.0.0",
+  "description": "A restful service to manage user sessions written in Golang.",
+  "main": "index.js",
+  "repository": "https://github.com/rebel-l/sessionservice.git",
+  "homepage": "https://github.com/rebel-l/sessionservice",
+  "bugs": "https://github.com/rebel-l/sessionservice/issues",
+  "author": {
+    "name": "Rebel L",
+    "email": "dj@rebel-l.net",
+    "url": "https://github.com/rebel-l"
+  },
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "newman": "^3.8.3"
+  }
+}
