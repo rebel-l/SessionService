@@ -10,6 +10,8 @@ fi
 echo
 
 # Execute tests
+echo -en "\E[40;35m\033[1mExecute tests\033[0m"
+echo
 go test -v ./src/***
 EXITCODE=$?
 if [ $EXITCODE != 0 ]
@@ -22,7 +24,10 @@ then
 fi
 
 # Execute linter
-gometalinter --vendor --config=gometalinter.json
+echo
+echo -en "\E[40;35m\033[1mExecute linters\033[0m"
+echo
+gometalinter --config=gometalinter.json
 EXITCODE=$?
 if [ $EXITCODE != 0 ]
 then
