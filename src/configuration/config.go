@@ -11,7 +11,7 @@ import (
 type Config struct {
 	Service *Service
 	Redis *redis.Options
-	AccountList []authentication.Account
+	AccountList map[string]authentication.Account
 
 	openFile func(string)(*os.File, error)
 }

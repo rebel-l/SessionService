@@ -8,10 +8,12 @@
     "Password": "",
     "DB": 0
   },
-  "AccountList": [
-    {
-      "AppId": "MyApp",
-      "ApiKey": "secrettoken"
+  "AccountList": {
+    "MyApp": {
+      "ApiKey": "secretapitoken"
+    },
+    "OtherApp": {
+      "ApiKey": "secretapitoken2"
     }
-  ]
+  }
 }
