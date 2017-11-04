@@ -3,6 +3,7 @@ package configuration
 import (
 	"encoding/json"
 	"github.com/go-redis/redis"
+	"github.com/rebel-l/sessionservice/src/authentication"
 	log "github.com/sirupsen/logrus"
 	"os"
 )
@@ -10,6 +11,8 @@ import (
 type Config struct {
 	Service *Service
 	Redis *redis.Options
+	AccountList []authentication.Account
+
 	openFile func(string)(*os.File, error)
 }
 
