@@ -50,6 +50,8 @@ func TestConfigLoadFileHappy(t *testing.T) {
 	assert.Equal(t, "redis:6379", c.Redis.Addr, "Redis host was not correctly loaded from file")
 	assert.Equal(t, "1234", c.Redis.Password, "Redis password was not correctly loaded from file")
 	assert.Equal(t, 0, c.Redis.DB, "Redis DB was not correctly loaded from file")
+	assert.Equal(t, "secretapitoken", c.AccountList["MyApp"].ApiKey, "AccountList was not loaded correct")
+	assert.Equal(t, "secretapitoken2", c.AccountList["OtherApp"].ApiKey, "AccountList was not loaded correct")
 }
 
 func TestConfigDecodeUnhappy(t *testing.T) {
