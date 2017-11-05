@@ -1,294 +1,288 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  description: This API is for a session service.
+  description: "This API is for a session service."
   version: "0.2.0"
-  title: SessionService API
-  # put the contact info for your development or API team
+  title: "SessionService API"
   contact:
-    name: Rebel-L
-    email: dj@rebel-l.net
-    url: https://github.com/rebel-l
-
+    name: "Rebel-L"
+    url: "https://github.com/rebel-l"
+    email: "dj@rebel-l.net"
   license:
-    name: GPL-3.0
-    url: https://www.gnu.org/licenses/gpl-3.0.en.html
-
-# all paths will be relative to the basePath specified
-# basePath: /v1
-
-# tags are used for organizing operations
+    name: "GPL-3.0"
+    url: "https://www.gnu.org/licenses/gpl-3.0.en.html"
+host: "virtserver.swaggerhub.com"
+basePath: "/rebel-l/Session/1.0.0"
 tags:
-- name: external
-  description: external calls
-- name: internal
-  description: secure internal calls
-consumes: ['application/json']
-produces: ['application/json', 'text/html']
+- name: "external"
+  description: "external calls"
+- name: "internal"
+  description: "secure internal calls"
 schemes:
-- https
-- http
-
-securityDefinitions:
-  # X-API-Key: abcdef12345
-  apiKey:
-    type: apiKey
-    in: header
-    name: X-API-Key
-  appId:
-    type: apiKey
-    in: header
-    name: X-APP-ID
-
+- "https"
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+- "text/html"
 paths:
   /docs:
     get:
       tags:
-      - external
-      operationId: docs
-      summary: Endpoint to this documentation.
-      description: This is the endpoint to get this documentation.
+      - "external"
+      summary: "Endpoint to this documentation."
+      description: "This is the endpoint to get this documentation."
+      operationId: "docs"
       produces:
-      - text/html
+      - "text/html"
+      parameters: []
       responses:
         200:
-          description: Sends the html for the documentation.
+          description: "Sends the html for the documentation."
   /ping:
     get:
       tags:
-      - external
-      operationId: ping
-      summary: Quick check if service is operating.
-      description: |
-        It's a quick check if the service is online and is able to handle requests.
+      - "external"
+      summary: "Quick check if service is operating."
+      description: "It's a quick check if the service is online and is able to handle\
+        \ requests.\n"
+      operationId: "ping"
       produces:
-      - application/json
+      - "application/json"
+      parameters: []
       responses:
         200:
-          description: session service is operating normal
+          description: "session service is operating normal"
           schema:
-            $ref: '#/definitions/PingResponseSuccess'
-        503: 
-          description: service or storage is unavailable (or both). check the response details.
+            $ref: "#/definitions/PingResponseSuccess"
+        503:
+          description: "service or storage is unavailable (or both). check the response\
+            \ details."
           schema:
-            $ref: '#/definitions/PingResponseFailure'
+            $ref: "#/definitions/PingResponseFailure"
   /session:
     get:
+      tags:
+      - "internal"
+      summary: "Returns a session for a specific id."
+      description: "By passing in the appropriate options, you can load the sesions\
+        \ for a \nspecific id. If no id is provided in the parameters it returns a\
+        \ new\nand empty session.\n"
+      operationId: "loadSession"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "pass the session id you want to load"
+        required: false
+        type: "string"
+        format: "uuid"
+      - name: "regenerateId"
+        in: "query"
+        description: "forces the service to generate a new session id."
+        required: false
+        type: "boolean"
+      - name: "keys"
+        in: "query"
+        description: "a comma seperated list of keys to return in the data object"
+        required: false
+        type: "string"
+        format: "field1,field2"
+      - name: "domain"
+        in: "query"
+        description: "an optional domain for the session"
+        required: false
+        type: "string"
+        format: "^([0-9a-zA-Z-]+[\\.])+[0-9a-zA-Z-]+$"
+      responses:
+        200:
+          description: "session id found and returned"
+          schema:
+            $ref: "#/definitions/SessionResponse"
+        400:
+          description: "bad input parameter"
+        403:
+          description: "The client is not allowed to do this request."
+        404:
+          description: "session was not found or has expired"
       security:
       - apiKey: []
       - appId: []
-      tags:
-      - internal
-      summary: Returns a session for a specific id.
-      operationId: loadSession
-      description: |
-        By passing in the appropriate options, you can load the sesions for a 
-        specific id. If no id is provided in the parameters it returns a new
-        and empty session.
-      produces:
-      - application/json
-      parameters:
-      - in: query
-        name: id
-        description: pass the session id you want to load
-        required: false
-        type: string
-        format: uuid
-      - in: query
-        name: regenerateId
-        description: forces the service to generate a new session id.
-        type: boolean
-        required: false
-      - in: query
-        name: keys
-        description: a comma seperated list of keys to return in the data object
-        required: false
-        type: string
-        format: field1,field2
-      - in: query
-        name: domain
-        description: an optional domain for the session
-        type: string
-        format: ^([0-9a-zA-Z-]+[\.])+[0-9a-zA-Z-]+$
-        required: false
-      responses:
-        200:
-          description: session id found and returned
-          schema:
-            $ref: '#/definitions/SessionResponse'
-        400:
-          description: bad input parameter
-        403:
-          description: The client is not allowed to do this request.
-        404:
-          description: session was not found or has expired
     put:
-      security:
-      - apiKey: []
-      - appId: []    
       tags:
-      - internal
-      summary: updates a session
-      operationId: updateSession
-      description: Updates the session.
+      - "internal"
+      summary: "updates a session"
+      description: "Updates the session."
+      operationId: "updateSession"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: body
-        name: session
-        description: pass the session you want to update
+      - in: "body"
+        name: "session"
+        description: "pass the session you want to update"
+        required: false
         schema:
-          $ref: '#/definitions/SessionBody'
+          $ref: "#/definitions/SessionBody"
       responses:
         200:
-          description: session updated
+          description: "session updated"
           schema:
-            $ref: '#/definitions/SessionResponse'
+            $ref: "#/definitions/SessionResponse"
         201:
-          description: session created if id is omitted in the body
+          description: "session created if id is omitted in the body"
           schema:
-            $ref: '#/definitions/SessionResponse'
+            $ref: "#/definitions/SessionResponse"
         400:
-          description: invalid input, data invalid
+          description: "invalid input, data invalid"
         403:
-          description: The client is not allowed to do this request.
+          description: "The client is not allowed to do this request."
         404:
-          description: session was not found or has expired
-    delete:
+          description: "session was not found or has expired"
       security:
       - apiKey: []
-      - appId: []    
+      - appId: []
+    delete:
       tags:
-      - internal
-      summary: deletes a session
-      operationId: deleteSession
-      description: Deletes a session and returns a new empty one.
+      - "internal"
+      summary: "deletes a session"
+      description: "Deletes a session and returns a new empty one."
+      operationId: "deleteSession"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: query
-        name: id
-        description: pass the session id you want to delete
+      - name: "id"
+        in: "query"
+        description: "pass the session id you want to delete"
         required: true
-        type: string
-        format: uuid
+        type: "string"
+        format: "uuid"
       responses:
         200:
-          description: session id found and deleted
+          description: "session id found and deleted"
           schema:
-            $ref: '#/definitions/SessionResponse'
+            $ref: "#/definitions/SessionResponse"
         400:
-          description: bad input parameter
+          description: "bad input parameter"
         403:
-          description: The client is not allowed to do this request.
+          description: "The client is not allowed to do this request."
         404:
-          description: session was not found or has expired
+          description: "session was not found or has expired"
+      security:
+      - apiKey: []
+      - appId: []
+securityDefinitions:
+  apiKey:
+    type: "apiKey"
+    name: "X-API-KEY"
+    in: "header"
+  appId:
+    type: "apiKey"
+    name: "X-APP-ID"
+    in: "header"
 definitions:
   PingResponseSuccess:
-    type: object
-    required: 
-    - success
-    - summary
-    properties:
-      success:
-        type: string
-        format: ^OK|FAIL$
-        example: OK
-      summary:
-        type: object
-        required: 
-        - service
-        - storage
-        properties:
-          service:
-            type: string
-            format: ^(PONG)*$
-            example: PONG
-          storage:
-            type: string
-            format: ^(PONG)*$
-            example: PONG
-  PingResponseFailure:
-    type: object
-    required: 
-    - success
-    - summary
-    properties:
-      success:
-        type: string
-        format: ^OK|FAIL$
-        example: FAIL
-      summary:
-        type: object
-        required: 
-        - service
-        - storage
-        properties:
-          service:
-            type: string
-            format: ^(PONG)*$
-            example: ""
-          storage:
-            type: string
-            format: ^(PONG)*$
-            example: ""
-  SessionResponse:
-    type: object
+    type: "object"
     required:
-    - id
-    - data
-    - lifetime
+    - "success"
+    properties:
+      success:
+        type: "string"
+        format: "^OK|FAIL$"
+        example: "OK"
+      summary:
+        $ref: "#/definitions/PingResponseSuccess_summary"
+  PingResponseFailure:
+    type: "object"
+    required:
+    - "success"
+    properties:
+      success:
+        type: "string"
+        format: "^OK|FAIL$"
+        example: "FAIL"
+      summary:
+        $ref: "#/definitions/PingResponseFailure_summary"
+  SessionResponse:
+    type: "object"
+    required:
+    - "data"
+    - "id"
+    - "lifetime"
     properties:
       id:
-        type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        type: "string"
+        format: "uuid"
+        example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
       data:
-        type: array
+        type: "array"
         items:
-          $ref: '#/definitions/Data'
+          $ref: "#/definitions/Data"
       lifetime:
-        type: integer
-        format: int32
+        type: "integer"
+        format: "int32"
         example: 1800
       expires:
-        type: integer
-        format: timestamp
+        type: "integer"
+        format: "timestamp"
         example: 1484485453
       domain:
-        type: string
-        format: ^([0-9a-zA-Z-]+[\.])+[0-9a-zA-Z-]+$
-        example: www.dancedancerevolution.party
+        type: "string"
+        format: "^([0-9a-zA-Z-]+[\\.])+[0-9a-zA-Z-]+$"
+        example: "www.dancedancerevolution.party"
   SessionBody:
-    type: object
+    type: "object"
     required:
-    - id
-    - data
+    - "data"
+    - "id"
     properties:
       id:
-        type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        type: "string"
+        format: "uuid"
+        example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
       data:
-        type: array
+        type: "array"
         items:
-          $ref: '#/definitions/Data'
+          $ref: "#/definitions/Data"
   Data:
-    type: object
+    type: "object"
     required:
-    - key
-    - value
+    - "key"
+    - "value"
     properties:
       key:
-        type: string
-        example: username
+        type: "string"
+        example: "username"
       value:
-        type: string
-        example: Lars
-# Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-# Added by API Auto Mocking Plugin
-basePath: /rebel-l/Session/1.0.0
+        type: "string"
+        example: "Lars"
+  PingResponseSuccess_summary:
+    required:
+    - "service"
+    - "storage"
+    properties:
+      service:
+        type: "string"
+        format: "^(PONG)*$"
+        example: "PONG"
+      storage:
+        type: "string"
+        format: "^(PONG)*$"
+        example: "PONG"
+  PingResponseFailure_summary:
+    required:
+    - "service"
+    - "storage"
+    properties:
+      service:
+        type: "string"
+        format: "^(PONG)*$"
+        example: ""
+      storage:
+        type: "string"
+        format: "^(PONG)*$"
+        example: ""

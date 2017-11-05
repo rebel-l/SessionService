@@ -1700,7 +1700,7 @@ try {
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="examples-Internal-deleteSession-0-curl">
                                                     <pre class="prettyprint"><code class="language-bsh">
-curl -X <span style="text-transform: uppercase;">delete</span> -H "X-API-Key: [[apiKey]]"  -H "X-APP-ID: [[apiKey]]"  "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/session?id="
+curl -X <span style="text-transform: uppercase;">delete</span> -H "X-API-KEY: [[apiKey]]"  -H "X-APP-ID: [[apiKey]]"  "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/session?id="
 
 
 </code></pre>
@@ -1782,9 +1782,9 @@ public class InternalApiExample {
 Configuration *apiConfig = [Configuration sharedConfig];
 
 // Configure API key authorization: (authentication scheme: apiKey)
-[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-API-Key"];
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-API-KEY"];
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-API-Key"];
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-API-KEY"];
 
 // Configure API key authorization: (authentication scheme: appId)
 [apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-APP-ID"];
@@ -1818,7 +1818,7 @@ var defaultClient = .ApiClient.instance;
 var apiKey = defaultClient.authentications['apiKey'];
 apiKey.apiKey = "YOUR API KEY"
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//apiKey.apiKeyPrefix['X-API-Key'] = "Token"
+//apiKey.apiKeyPrefix['X-API-KEY'] = "Token"
 
 // Configure API key authorization: appId
 var appId = defaultClient.authentications['appId'];
@@ -1863,9 +1863,9 @@ namespace Example
         {
             
             // Configure API key authorization: apiKey
-            Configuration.Default.ApiKey.Add("X-API-Key", "YOUR_API_KEY");
+            Configuration.Default.ApiKey.Add("X-API-KEY", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("X-API-Key", "Bearer");
+            // Configuration.Default.ApiKeyPrefix.Add("X-API-KEY", "Bearer");
             // Configure API key authorization: appId
             Configuration.Default.ApiKey.Add("X-APP-ID", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1898,9 +1898,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure API key authorization: apiKey
-io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-API-KEY', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+// io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-KEY', 'Bearer');
 // Configure API key authorization: appId
 io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-APP-ID', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -2363,7 +2363,7 @@ and empty session.
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="examples-Internal-loadSession-0-curl">
                                                     <pre class="prettyprint"><code class="language-bsh">
-curl -X <span style="text-transform: uppercase;">get</span> -H "X-API-Key: [[apiKey]]"  -H "X-APP-ID: [[apiKey]]"  "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/session?id=&regenerateId=&keys=&domain="
+curl -X <span style="text-transform: uppercase;">get</span> -H "X-API-KEY: [[apiKey]]"  -H "X-APP-ID: [[apiKey]]"  "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/session?id=&regenerateId=&keys=&domain="
 
 
 </code></pre>
@@ -2451,9 +2451,9 @@ public class InternalApiExample {
 Configuration *apiConfig = [Configuration sharedConfig];
 
 // Configure API key authorization: (authentication scheme: apiKey)
-[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-API-Key"];
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-API-KEY"];
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-API-Key"];
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-API-KEY"];
 
 // Configure API key authorization: (authentication scheme: appId)
 [apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-APP-ID"];
@@ -2493,7 +2493,7 @@ var defaultClient = .ApiClient.instance;
 var apiKey = defaultClient.authentications['apiKey'];
 apiKey.apiKey = "YOUR API KEY"
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//apiKey.apiKeyPrefix['X-API-Key'] = "Token"
+//apiKey.apiKeyPrefix['X-API-KEY'] = "Token"
 
 // Configure API key authorization: appId
 var appId = defaultClient.authentications['appId'];
@@ -2542,9 +2542,9 @@ namespace Example
         {
             
             // Configure API key authorization: apiKey
-            Configuration.Default.ApiKey.Add("X-API-Key", "YOUR_API_KEY");
+            Configuration.Default.ApiKey.Add("X-API-KEY", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("X-API-Key", "Bearer");
+            // Configuration.Default.ApiKeyPrefix.Add("X-API-KEY", "Bearer");
             // Configure API key authorization: appId
             Configuration.Default.ApiKey.Add("X-APP-ID", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -2580,9 +2580,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure API key authorization: apiKey
-io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-API-KEY', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+// io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-KEY', 'Bearer');
 // Configure API key authorization: appId
 io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-APP-ID', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -3146,7 +3146,7 @@ try {
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="examples-Internal-updateSession-0-curl">
                                                     <pre class="prettyprint"><code class="language-bsh">
-curl -X <span style="text-transform: uppercase;">put</span> -H "X-API-Key: [[apiKey]]"  -H "X-APP-ID: [[apiKey]]"  "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/session"
+curl -X <span style="text-transform: uppercase;">put</span> -H "X-API-KEY: [[apiKey]]"  -H "X-APP-ID: [[apiKey]]"  "https://virtserver.swaggerhub.com/rebel-l/Session/1.0.0/session"
 
 
 </code></pre>
@@ -3228,9 +3228,9 @@ public class InternalApiExample {
 Configuration *apiConfig = [Configuration sharedConfig];
 
 // Configure API key authorization: (authentication scheme: apiKey)
-[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-API-Key"];
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-API-KEY"];
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-API-Key"];
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-API-KEY"];
 
 // Configure API key authorization: (authentication scheme: appId)
 [apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-APP-ID"];
@@ -3264,7 +3264,7 @@ var defaultClient = .ApiClient.instance;
 var apiKey = defaultClient.authentications['apiKey'];
 apiKey.apiKey = "YOUR API KEY"
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//apiKey.apiKeyPrefix['X-API-Key'] = "Token"
+//apiKey.apiKeyPrefix['X-API-KEY'] = "Token"
 
 // Configure API key authorization: appId
 var appId = defaultClient.authentications['appId'];
@@ -3310,9 +3310,9 @@ namespace Example
         {
             
             // Configure API key authorization: apiKey
-            Configuration.Default.ApiKey.Add("X-API-Key", "YOUR_API_KEY");
+            Configuration.Default.ApiKey.Add("X-API-KEY", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("X-API-Key", "Bearer");
+            // Configuration.Default.ApiKeyPrefix.Add("X-API-KEY", "Bearer");
             // Configure API key authorization: appId
             Configuration.Default.ApiKey.Add("X-APP-ID", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -3345,9 +3345,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure API key authorization: apiKey
-io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-API-KEY', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+// io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-KEY', 'Bearer');
 // Configure API key authorization: appId
 io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-APP-ID', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -3860,7 +3860,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-10-08T12:32:11.117Z
+                    Generated 2017-11-05T00:11:08.620Z
                 </div>
             </div>
         </div>
