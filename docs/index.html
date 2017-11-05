@@ -723,20 +723,6 @@ margin-bottom: 20px;
 
   var defs = {}
 
-  defs.Data = {
-  "type" : "object",
-  "required" : [ "key", "value" ],
-  "properties" : {
-    "key" : {
-      "type" : "string",
-      "example" : "username"
-    },
-    "value" : {
-      "type" : "string",
-      "example" : "Lars"
-    }
-  }
-};
   defs.PingResponseFailure = {
   "type" : "object",
   "required" : [ "success" ],
@@ -805,9 +791,11 @@ margin-bottom: 20px;
       "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
     },
     "data" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/definitions/Data"
+      "type" : "object",
+      "additionalProperties" : {
+        "type" : "string",
+        "example" : "a value to store",
+        "description" : "a list of key value pairs"
       }
     }
   }
@@ -822,9 +810,11 @@ margin-bottom: 20px;
       "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
     },
     "data" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/definitions/Data"
+      "type" : "object",
+      "additionalProperties" : {
+        "type" : "string",
+        "example" : "a value to store",
+        "description" : "a list of key value pairs"
       }
     },
     "lifetime" : {
@@ -3860,7 +3850,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-11-05T00:11:08.620Z
+                    Generated 2017-11-05T15:56:28.588Z
                 </div>
             </div>
         </div>

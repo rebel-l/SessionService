@@ -1,3 +1,4 @@
+---
 swagger: "2.0"
 info:
   description: "This API is for a session service."
@@ -219,9 +220,11 @@ definitions:
         format: "uuid"
         example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
       data:
-        type: "array"
-        items:
-          $ref: "#/definitions/Data"
+        type: "object"
+        additionalProperties:
+          type: "string"
+          example: "a value to store"
+          description: "a list of key value pairs"
       lifetime:
         type: "integer"
         format: "int32"
@@ -245,21 +248,11 @@ definitions:
         format: "uuid"
         example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
       data:
-        type: "array"
-        items:
-          $ref: "#/definitions/Data"
-  Data:
-    type: "object"
-    required:
-    - "key"
-    - "value"
-    properties:
-      key:
-        type: "string"
-        example: "username"
-      value:
-        type: "string"
-        example: "Lars"
+        type: "object"
+        additionalProperties:
+          type: "string"
+          example: "a value to store"
+          description: "a list of key value pairs"
   PingResponseSuccess_summary:
     required:
     - "service"
