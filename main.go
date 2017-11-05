@@ -115,6 +115,10 @@ func final(w http.ResponseWriter, r *http.Request) {
 		log.Debugf("%s: %s", key, value)
 	}
 
+
+
+	// TODO: send session response here instead OK
+
 	w.WriteHeader(http.StatusOK)
 	i,_ := w.Write([]byte("OK"))
 	if i < 1 {
