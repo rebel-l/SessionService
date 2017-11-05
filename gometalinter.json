@@ -1,5 +1,7 @@
 {
-  "exclude": [],
+  "exclude": [
+    "defer r.Body.Close()"
+  ],
   "enable-all": true,
   "concurrency": 2,
   "warn-unmatched-nolint": true,

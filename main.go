@@ -1,17 +1,17 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/authentication"
 	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/endpoint"
+	"github.com/rebel-l/sessionservice/src/request"
 	//"github.com/rebel-l/sessionservice/src/response"
 	log "github.com/sirupsen/logrus"
 	"net/http"
-	//"encoding/json"
 	"strconv"
-
 )
 
 func main() {
@@ -100,11 +100,28 @@ func serve(config configuration.Config) {
 
 func final(w http.ResponseWriter, r *http.Request) {
 	log.Println("Executing finalHandler")
+
+	// read request body
+	decoder := json.NewDecoder(r.Body)
+	defer r.Body.Close()
+	var data request.Update
+	err := decoder.Decode(&data)
+	if err != nil {
+		log.Errorf("Unable to read request body: %s", err)
+	}
+
+	log.Debugf("Id to update: %s", data.Id)
+	for key, value := range data.Data {
+		log.Debugf("%s: %s", key, value)
+	}
+
 	w.WriteHeader(http.StatusOK)
 	i,_ := w.Write([]byte("OK"))
 	if i < 1 {
 		log.Errorf("Wasn't able to write body: %d", i)
 	}
+
+	log.Println("finalHandler done")
 }
 
 
