@@ -27,7 +27,7 @@ func InitPing(redisClient *redis.Client, r *mux.Router) {
 	p.response = response.NewPing()
 	p.observer = append(p.observer, p.response)
 	p.redisClient = redisClient
-	r.HandleFunc("/ping/", p.handler)
+	r.HandleFunc("/ping/", p.handler).Methods(http.MethodGet)
 
 	log.Debug("Ping endpoint: initialized!")
 }
