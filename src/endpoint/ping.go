@@ -11,9 +11,7 @@ import (
 	"time"
 )
 
-const contentHeader = "Content-Type"
-const contentType = "application/json"
-
+// Ping handles the ping endpoint
 type Ping struct {
 	response *response.Ping
 	observer []response.Observer
