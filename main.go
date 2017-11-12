@@ -1,17 +1,14 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/authentication"
 	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/endpoint"
-	"github.com/rebel-l/sessionservice/src/request"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
-	"github.com/rebel-l/sessionservice/src/response"
 	"github.com/gorilla/mux"
 )
 
@@ -82,11 +79,9 @@ func (s *server) initEndpoints() *server {
 	endpoint.InitPing(s.redis, s.router)
 
 	// session
-	sessionGet := http.HandlerFunc(sessionGet)
-	sessionPut := http.HandlerFunc(sessionPut)
-	s.router.Handle("/session/", s.middleWare.Middleware(sessionGet)).Methods(http.MethodGet)
-	s.router.Handle("/session/", s.middleWare.Middleware(sessionPut)).Methods(http.MethodPut)
-	log.Debug("Session endpoint initialized")
+	endpoint.InitSession(s.redis, s.router, s.middleWare)
+	sessionGet := http.HandlerFunc(sessionGet)	// TODO: remove
+	s.router.Handle("/session/", s.middleWare.Middleware(sessionGet)).Methods(http.MethodGet) // TODO: remove
 
 	return s
 }
@@ -134,33 +129,6 @@ func sessionGet(w http.ResponseWriter, r *http.Request) {
 	log.Info("Executing session GET done!")
 }
 
-func sessionPut(w http.ResponseWriter, r *http.Request) {
-	log.Println("Executing session PUT")
-
-	// read request body
-	decoder := json.NewDecoder(r.Body)
-	defer r.Body.Close()
-	var data request.Update
-	err := decoder.Decode(&data)
-	if err != nil {
-		log.Errorf("Unable to read request body: %s", err)
-	}
-
-	log.Debugf("Id to update: %s", data.Id)
-	for key, value := range data.Data {
-		log.Debugf("%s: %s", key, value)
-	}
-
-	// write request
-	w.WriteHeader(http.StatusOK)
-	session := response.NewSession("",0)
-	err = json.NewEncoder(w).Encode(session)
-	if err != nil {
-		log.Errorf("Wasn't able to write body: %s", err)
-	}
-
-	log.Info("Executing session PUT done!")
-}
 
 
 //func setEntry(key string, value string) {
