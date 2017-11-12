@@ -3,6 +3,7 @@ package endpoint
 import (
 	"encoding/json"
 	"github.com/go-redis/redis"
+	"github.com/gorilla/mux"
 	"github.com/rebel-l/sessionservice/src/response"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -19,14 +20,14 @@ type Ping struct {
 	redisClient *redis.Client
 }
 
-func InitPing(redisClient *redis.Client) {
+func InitPing(redisClient *redis.Client, r *mux.Router) {
 	log.Debug("Ping endpoint: Init ...")
 
 	p := new(Ping)
 	p.response = response.NewPing()
 	p.observer = append(p.observer, p.response)
 	p.redisClient = redisClient
-	http.HandleFunc("/ping/", p.handler)
+	r.HandleFunc("/ping/", p.handler)
 
 	log.Debug("Ping endpoint: initialized!")
 }

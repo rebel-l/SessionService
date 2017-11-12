@@ -1,5 +1,5 @@
-hash: 1595c476fc5e795b5b85f6cc668ca4b2671854ba91b053d3ca4baec863bfb0de
-updated: 2017-11-05T22:40:26.211216697+01:00
+hash: 198a4a641086742366c0486967116c4e11123bdad42ddb6d0e5f9a6efe2c1222
+updated: 2017-11-12T16:45:17.474541527+01:00
 imports:
 - name: github.com/go-redis/redis
   version: 9c20773cb24624a4ad05cddb60583b61f4ffa701
@@ -9,22 +9,24 @@ imports:
   - internal/hashtag
   - internal/pool
   - internal/proto
+- name: github.com/gorilla/mux
+  version: 7f08801859139f86dfafd1c296e2cba9a80d292e
 - name: github.com/pborman/uuid
   version: e790cca94e6cc75c7064b1332e63811d4aae1a53
 - name: github.com/sirupsen/logrus
   version: f006c2ac4710855cf0f916dd6b77acf6b048dc6e
 - name: golang.org/x/crypto
-  version: ca1fcd4ab4c10bc58852a894bcf195fab2229efe
+  version: 6a293f2d4b14b8e6d3f0539e383f6d0d30fce3fd
   subpackages:
   - ssh/terminal
 - name: golang.org/x/sys
-  version: 8eb05f94d449fdf134ec24630ce69ada5b469c1c
+  version: 1e2299c37cc91a509f1b12369872d27be0ce98a6
   subpackages:
   - unix
   - windows
 testImports:
 - name: github.com/davecgh/go-spew
-  version: 04cdfd42973bb9c8589fd6a731800cf222fde1a9
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
   subpackages:
   - spew
 - name: github.com/pmezard/go-difflib

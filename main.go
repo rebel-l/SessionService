@@ -8,20 +8,21 @@ import (
 	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/endpoint"
 	"github.com/rebel-l/sessionservice/src/request"
-	//"github.com/rebel-l/sessionservice/src/response"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 	"github.com/rebel-l/sessionservice/src/response"
+	"github.com/gorilla/mux"
 )
 
 func main() {
 	fmt.Println("")
 
-	// init config & logging
+	// init config & server
 	parser := configuration.GetParser()
-	config := parser.Parse()
-	initLogging(config.Service.LogLevel)
+	server := new(server)
+	server.config = parser.Parse()
+	server.init().serve()
 	// response.PingSummary
 	//ps := pingSummaryExample()
 
@@ -42,14 +43,52 @@ func main() {
 	// start to serve
 	//if *runServer {
 	//	fmt.Println("Static Server ...")
-		serve(*config)
 	//	fmt.Println("")
 	//}
 }
 
-func initLogging(loglevel log.Level) {
-	log.SetLevel(loglevel)
-	log.Debug("Logging initialized")
+type server struct {
+	config *configuration.Config
+	router *mux.Router
+	middleWare *authentication.Authentification
+	redis *redis.Client
+}
+
+func (s *server) init() *server {
+	// init logging
+	log.SetLevel(s.config.Service.LogLevel)
+	log.Debugf("Logging initialized: %d", s.config.Service.LogLevel)
+
+	// init Router
+	s.router = mux.NewRouter()
+
+	// init middleware
+	s.middleWare = authentication.New(s.config.AccountList)
+
+	// init storage
+	s.redis = redis.NewClient(s.config.Redis)
+
+	// init endpoints
+	s.initEndpoints()
+
+	return s
+}
+
+func (s *server) initEndpoints() *server {
+	// docs
+	endpoint.InitDocsEndpoint(s.router)
+
+	// ping
+	endpoint.InitPing(s.redis, s.router)
+
+	// session
+	sessionGet := http.HandlerFunc(sessionGet)
+	sessionPut := http.HandlerFunc(sessionPut)
+	s.router.Handle("/session/", s.middleWare.Middleware(sessionGet)).Methods(http.MethodGet)
+	s.router.Handle("/session/", s.middleWare.Middleware(sessionPut)).Methods(http.MethodPut)
+	log.Debug("Session endpoint initialized")
+
+	return s
 }
 
 //func pingSummaryExample() *response.PingSummary {
@@ -77,30 +116,26 @@ func initLogging(loglevel log.Level) {
 //	fmt.Println("")
 //}
 
-func serve(config configuration.Config) {
-	// init middleware
-	authMw := authentication.New(config.AccountList)
-
-	// init storage
-	client := redis.NewClient(config.Redis)
-
-	// init endpoints
-	endpoint.InitDocsEndpoint()
-	endpoint.InitPing(client)
-
-	finalHandler := http.HandlerFunc(final)
-	http.Handle("/session/", authMw.Middleware(finalHandler))
-
-	// run the service
-	log.Infof("Listening on port %d ...", config.Service.Port)
-	err := http.ListenAndServe(":" + strconv.Itoa(config.Service.Port), nil)
+func (s *server) serve() {
+	log.Infof("Listening on port %d ...", s.config.Service.Port)
+	err := http.ListenAndServe(":" + strconv.Itoa(s.config.Service.Port), s.router)
 	if  err != nil {
 		log.Panicf("Couldn't start server. Error: %s", err)
 	}
 }
 
-func final(w http.ResponseWriter, r *http.Request) {
-	log.Println("Executing finalHandler")
+func sessionGet(w http.ResponseWriter, r *http.Request) {
+	log.Info("Executing session GET")
+	w.WriteHeader(http.StatusOK)
+	i,_ := w.Write([]byte("OK"))
+	if i < 1 {
+		log.Errorf("Wasn't able to write body: %d", i)
+	}
+	log.Info("Executing session GET done!")
+}
+
+func sessionPut(w http.ResponseWriter, r *http.Request) {
+	log.Println("Executing session PUT")
 
 	// read request body
 	decoder := json.NewDecoder(r.Body)
@@ -116,6 +151,7 @@ func final(w http.ResponseWriter, r *http.Request) {
 		log.Debugf("%s: %s", key, value)
 	}
 
+	// write request
 	w.WriteHeader(http.StatusOK)
 	session := response.NewSession("",0)
 	err = json.NewEncoder(w).Encode(session)
@@ -123,7 +159,7 @@ func final(w http.ResponseWriter, r *http.Request) {
 		log.Errorf("Wasn't able to write body: %s", err)
 	}
 
-	log.Println("finalHandler done")
+	log.Info("Executing session PUT done!")
 }
 
 

@@ -1,15 +1,16 @@
 package endpoint
 
 import (
-	"net/http"
+	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
+	"net/http"
 )
 
-func InitDocsEndpoint()  {
+func InitDocsEndpoint(r *mux.Router)  {
 	log.Debug("Docs endpoint: Init ...")
 
 	fs := http.FileServer(http.Dir("docs"))
-	http.Handle("/docs/", http.StripPrefix("/docs/", fs))
+	r.Handle("/docs/", http.StripPrefix("/docs/", fs))
 
 	log.Debug("Docs endpoint: initialized!")
 }
