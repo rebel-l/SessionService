@@ -12,6 +12,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
+	"github.com/rebel-l/sessionservice/src/response"
 )
 
 func main() {
@@ -115,14 +116,11 @@ func final(w http.ResponseWriter, r *http.Request) {
 		log.Debugf("%s: %s", key, value)
 	}
 
-
-
-	// TODO: send session response here instead OK
-
 	w.WriteHeader(http.StatusOK)
-	i,_ := w.Write([]byte("OK"))
-	if i < 1 {
-		log.Errorf("Wasn't able to write body: %d", i)
+	session := response.NewSession("",0)
+	err = json.NewEncoder(w).Encode(session)
+	if err != nil {
+		log.Errorf("Wasn't able to write body: %s", err)
 	}
 
 	log.Println("finalHandler done")
