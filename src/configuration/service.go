@@ -5,6 +5,7 @@ import "github.com/sirupsen/logrus"
 type Service struct {
 	Port int
 	LogLevel logrus.Level
+	SessionLifetime int
 }
 
 func newService() *Service {

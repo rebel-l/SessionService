@@ -11,6 +11,7 @@ func TestServiceDefault(t *testing.T)  {
 	s := newService()
 	assert.Equal(t, ServiceDefaultPort, s.Port, "The default Port of the configuration should be " + strconv.Itoa(ServiceDefaultPort))
 	assert.Equal(t, ServiceDefaultLogLevel, s.LogLevel, "The default LogLevel of the configuration should be " + ServiceDefaultLogLevel.String())
+	assert.Equal(t, 0, s.SessionLifetime, "The default SessionLifetime of the configuration should be 0")
 }
 
 func TestServiceChanges(t *testing.T)  {
@@ -23,7 +24,7 @@ func TestServiceChanges(t *testing.T)  {
 
 func TestServiceJson(t *testing.T)  {
 	s := newService()
-	assert.Equal(t, "{\"Port\":4000,\"LogLevel\":2}", serviceJsonEncode(s), "The JSON encoded struct is not matching")
+	assert.Equal(t, "{\"Port\":4000,\"LogLevel\":2,\"SessionLifetime\":0}", serviceJsonEncode(s), "The JSON encoded struct is not matching")
 }
 
 func serviceJsonEncode(s *Service) string {

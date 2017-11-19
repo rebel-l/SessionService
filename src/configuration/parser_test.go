@@ -46,6 +46,7 @@ func TestParserParametersSetConfig(t *testing.T) {
 	p := GetParser()
 	p.servicePort = 1000
 	p.serviceLogLevel = 6
+	p.serviceSessionLifetime = 100
 	p.redisAddr = "redisUrl"
 	p.redisDb = 21
 	p.redisPassword = "secret"
@@ -54,6 +55,7 @@ func TestParserParametersSetConfig(t *testing.T) {
 	config := p.Parse()
 	assert.Equal(t, 1000, config.Service.Port, "Service.Port couldn't be set by parser (parameter)")
 	assert.Equal(t, log.Level(6), config.Service.LogLevel, "Service.LogLevel couldn't be set by parser (parameter)")
+	assert.Equal(t, 100, config.Service.SessionLifetime, "Service.SessionLifetime couldn't be set by parser (parameter)")
 	assert.Equal(t, "redisUrl", config.Redis.Addr, "Redis.Addr couldn't be set by parser (parameter)")
 	assert.Equal(t, 21, config.Redis.DB, "Redis.DB couldn't be set by parser (parameter)")
 	assert.Equal(t, "secret", config.Redis.Password, "Redis.Password couldn't be set by parser (parameter)")
@@ -67,6 +69,7 @@ func TestParserParametersOverwriteConfigFromFile(t *testing.T) {
 	p := GetParser()
 	p.servicePort = 0
 	p.serviceLogLevel = 0
+	p.serviceSessionLifetime = 0
 	p.redisAddr = ""
 	p.redisDb = 0
 	p.redisPassword = ""
@@ -77,6 +80,7 @@ func TestParserParametersOverwriteConfigFromFile(t *testing.T) {
 	config := p.Parse()
 	assert.Equal(t, 333, config.Service.Port, "Service.Port was not loaded from file")
 	assert.Equal(t, log.Level(5), config.Service.LogLevel, "Service.LogLevel was not loaded from file")
+	assert.Equal(t, 3600, config.Service.SessionLifetime, "Service.SessionLifetime was not loaded from file")
 	assert.Equal(t, "redis:6379", config.Redis.Addr, "Redis.Addr was not loaded from file")
 	assert.Equal(t, 11, config.Redis.DB, "Redis.DB was not loaded from file")
 	assert.Equal(t, "1234", config.Redis.Password, "Redis.Password was not loaded from file")
@@ -87,6 +91,7 @@ func TestParserParametersOverwriteConfigFromFile(t *testing.T) {
 	 // Setup
 	p.servicePort = 1000
 	p.serviceLogLevel = 6
+	p.serviceSessionLifetime = 3000
 	p.redisAddr = "redisUrl"
 	p.redisDb = 21
 	p.redisPassword = "secret"
@@ -95,6 +100,7 @@ func TestParserParametersOverwriteConfigFromFile(t *testing.T) {
 	config = p.Parse()
 	assert.Equal(t, 1000, config.Service.Port, "Service.Port couldn't be set by parser (parameter)")
 	assert.Equal(t, log.Level(6), config.Service.LogLevel, "Service.LogLevel couldn't be set by parser (parameter)")
+	assert.Equal(t, 3000, config.Service.SessionLifetime, "Service.SessionLifetime couldn't be set by parser (parameter)")
 	assert.Equal(t, "redisUrl", config.Redis.Addr, "Redis.Addr couldn't be set by parser (parameter)")
 	assert.Equal(t, 21, config.Redis.DB, "Redis.DB couldn't be set by parser (parameter)")
 	assert.Equal(t, "secret", config.Redis.Password, "Redis.Password couldn't be set by parser (parameter)")

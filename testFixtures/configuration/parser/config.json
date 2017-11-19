@@ -1,7 +1,8 @@
 {
   "Service": {
     "Port": 333,
-    "LogLevel": 5
+    "LogLevel": 5,
+    "SessionLifetime": 3600
   },
   "Redis": {
     "Addr": "redis:6379",

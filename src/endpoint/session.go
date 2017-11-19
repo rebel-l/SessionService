@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pborman/uuid"
 	"github.com/rebel-l/sessionservice/src/authentication"
+	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/request"
 	"github.com/rebel-l/sessionservice/src/response"
 	log "github.com/sirupsen/logrus"
@@ -22,15 +23,20 @@ const (
 type Session struct {
 	redis *redis.Client
 	middleware *authentication.Authentification
+	config *configuration.Service
 }
 
 // InitSession initializes the session endpoints
-func InitSession(redisClient *redis.Client, router *mux.Router, middleware *authentication.Authentification) {
+func InitSession(redisClient *redis.Client, router *mux.Router, middleware *authentication.Authentification, config *configuration.Service) {
 	log.Debug("Session endpoint: Init ...")
 
+	// init Session struct
 	s := new(Session)
 	s.redis = redisClient
 	s.middleware = middleware
+	s.config = config
+
+	// register handler
 	router.Handle("/session/", s.handlerFactory(http.MethodPut)).Methods(http.MethodPut)
 
 	log.Debug("Session endpoint: initialized!")
@@ -47,7 +53,9 @@ func (s *Session) handlePut(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// store session TODO: implement
+	// store session
+	session := response.NewSession(requestBody.Id, s.config.SessionLifetime)
+
 	log.Debugf("Id to update: %s", requestBody.Id)
 	for key, value := range requestBody.Data {
 		log.Debugf("%s: %s", key, value)
@@ -56,7 +64,6 @@ func (s *Session) handlePut(res http.ResponseWriter, req *http.Request) {
 	// write request
 	res.Header().Set(contentHeader, contentTypeJson)
 	res.WriteHeader(http.StatusOK)
-	session := response.NewSession(requestBody.Id,0)
 	err = json.NewEncoder(res).Encode(session)
 	if err != nil {
 		log.Errorf("Wasn't able to write body: %s", err)
