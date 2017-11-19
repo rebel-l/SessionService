@@ -72,7 +72,7 @@ func (p *Ping) checkStorage(wg *sync.WaitGroup) {
 }
 
 func (p *Ping) send(res http.ResponseWriter)  {
-	res.Header().Set(contentHeader, contentType)
+	res.Header().Set(contentHeader, contentTypeJson)
 	if p.response.Success != response.SUCCESS {
 		res.WriteHeader(http.StatusServiceUnavailable)
 	}
