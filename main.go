@@ -79,7 +79,7 @@ func (s *server) initEndpoints() *server {
 	endpoint.InitPing(s.redis, s.router)
 
 	// session
-	endpoint.InitSession(s.redis, s.router, s.middleWare)
+	endpoint.InitSession(s.redis, s.router, s.middleWare, s.config.Service)
 	sessionGet := http.HandlerFunc(sessionGet)	// TODO: remove
 	s.router.Handle("/session/", s.middleWare.Middleware(sessionGet)).Methods(http.MethodGet) // TODO: remove
 

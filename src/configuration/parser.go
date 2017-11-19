@@ -6,6 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"os"
 	"runtime"
+	"github.com/rebel-l/sessionservice/src/response"
 )
 
 const Version = "0.1.0"
@@ -13,14 +14,15 @@ const Version = "0.1.0"
 var instance *Parser
 
 type Parser struct {
-	filename        string
-	servicePort     int
-	serviceLogLevel int
-	version         bool
-	redisAddr       string
-	redisPassword   string
-	redisDb         int
-	printVersion    func()
+	filename               string
+	servicePort            int
+	serviceLogLevel        int
+	serviceSessionLifetime int
+	version                bool
+	redisAddr              string
+	redisPassword          string
+	redisDb                int
+	printVersion           func()
 }
 
 func GetParser() *Parser {
@@ -47,6 +49,10 @@ func (p *Parser) Parse() *Config {
 		c.Service.LogLevel = log.Level(p.serviceLogLevel)
 	}
 
+	if p.serviceSessionLifetime > 0 {
+		c.Service.SessionLifetime = p.serviceSessionLifetime
+	}
+
 	if p.redisAddr != "" {
 		c.Redis.Addr = p.redisAddr
 	}
@@ -66,6 +72,7 @@ func (p *Parser) parseCliArgs() {
 	var filename *string
 	var servicePort *int
 	var serviceLogLevel *int
+	var serviceSessionLifetime *int
 	var version *bool
 	var redisAddr *string
 	var redisPassword *string
@@ -95,6 +102,14 @@ func (p *Parser) parseCliArgs() {
 		)
 	}
 
+	if flag.Lookup("Service.SessionLifetime") == nil {
+		serviceSessionLifetime = flag.Int(
+			"Service.SessionLifetime",
+			0,
+			fmt.Sprintf("The lifetime of the session in seconds. Default is %d", response.LIFETIME),
+		)
+	}
+
 	if flag.Lookup("v") == nil {
 		version = flag.Bool("v", false, "Shows Version information.")
 	}
@@ -116,6 +131,7 @@ func (p *Parser) parseCliArgs() {
 	p.filename = *filename
 	p.servicePort = *servicePort
 	p.serviceLogLevel = *serviceLogLevel
+	p.serviceSessionLifetime = *serviceSessionLifetime
 	p.redisAddr = *redisAddr
 	p.redisDb = *redisDb
 	p.redisPassword = *redisPassword
