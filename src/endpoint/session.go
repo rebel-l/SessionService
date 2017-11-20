@@ -13,6 +13,7 @@ import (
 	"github.com/rebel-l/sessionservice/src/response"
 	log "github.com/sirupsen/logrus"
 	"net/http"
+	"time"
 )
 
 const (
@@ -55,8 +56,41 @@ func (s *Session) handlePut(res http.ResponseWriter, req *http.Request) {
 
 	// store session
 	session := response.NewSession(requestBody.Id, s.config.SessionLifetime)
+	lifetime := time.Duration(session.Lifetime) * time.Second
+	if requestBody.Id == "" {
+		log.Debugf("Create new session: %s", session.Id)
+		dataJson, err := json.Marshal(requestBody.Data)
+		if err != nil {
+			log.Errorf("Saving Id %s failed: %s", session.Id, err)
+			s.sendPlain(
+				"Session could not be stored because of internal error. Contact administrator or retry it later.",
+				res,
+				http.StatusInternalServerError,
+			)
+			return
+		}
 
-	log.Debugf("Id to update: %s", requestBody.Id)
+		status := s.redis.Set(session.Id, dataJson, lifetime)
+		if status.Err() != nil {
+			log.Errorf("Saving Id %s failed: %s", session.Id, status.Err().Error())
+			s.sendPlain(
+				"Session could not be stored because of internal error. Contact administrator or retry it later.",
+				res,
+				http.StatusInternalServerError,
+			)
+			return
+		}
+		session.Data = requestBody.Data
+	} else {
+		log.Debugf("Update session: %s", requestBody.Id)
+		/*
+			TODO:
+				1. load stored session
+				2. if key not found ==> return error (404)
+				3. merge data with current stored
+		  */
+	}
+
 	for key, value := range requestBody.Data {
 		log.Debugf("%s: %s", key, value)
 	}
