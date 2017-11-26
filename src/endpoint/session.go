@@ -57,39 +57,61 @@ func (s *Session) handlePut(res http.ResponseWriter, req *http.Request) {
 	// store session
 	session := response.NewSession(requestBody.Id, s.config.SessionLifetime)
 	lifetime := time.Duration(session.Lifetime) * time.Second
+	status := http.StatusOK
+	var dataJson []byte
 	if requestBody.Id == "" {
 		log.Debugf("Create new session: %s", session.Id)
-		dataJson, err := json.Marshal(requestBody.Data)
+		dataJson, err = json.Marshal(requestBody.Data)
 		if err != nil {
 			log.Errorf("Saving Id %s failed: %s", session.Id, err)
+			s.sendInternalServerError(res)
+			return
+		}
+		status = http.StatusCreated
+	} else {
+		log.Debugf("Update session: %s", requestBody.Id)
+
+		// 1. load stored session
+		result := s.redis.Get(requestBody.Id)
+
+		// 2. if key not found ==> return error (404)
+		storageData, err := result.Result()
+		if err != nil {
+			log.Errorf("Session Id %s not found or has expired: %s", session.Id, err)
 			s.sendPlain(
-				"Session could not be stored because of internal error. Contact administrator or retry it later.",
+				"Session was not found or has expired.",
 				res,
-				http.StatusInternalServerError,
+				http.StatusNotFound,
 			)
 			return
 		}
 
-		status := s.redis.Set(session.Id, dataJson, lifetime)
-		if status.Err() != nil {
-			log.Errorf("Saving Id %s failed: %s", session.Id, status.Err().Error())
-			s.sendPlain(
-				"Session could not be stored because of internal error. Contact administrator or retry it later.",
-				res,
-				http.StatusInternalServerError,
-			)
+		// 3. merge data with current stored
+		log.Debugf("Loaded session data for %s: %s", session.Id, storageData)
+		oldData := make(map[string]string)
+		err = json.Unmarshal([]byte(storageData), &oldData)
+		if err != nil {
+			log.Errorf("Data loaded for %s can't be turned into map: %s", session.Id, err)
+			s.sendInternalServerError(res)
 			return
 		}
-		session.Data = requestBody.Data
-	} else {
-		log.Debugf("Update session: %s", requestBody.Id)
-		/*
-			TODO:
-				1. load stored session
-				2. if key not found ==> return error (404)
-				3. merge data with current stored
-		  */
+
+		requestBody.Data = s.mergeData(oldData, requestBody.Data)
+		dataJson, err = json.Marshal(requestBody.Data)
+		if err != nil {
+			log.Errorf("Saving Id %s failed: %s", session.Id, err)
+			s.sendInternalServerError(res)
+			return
+		}
 	}
+
+	result := s.redis.Set(session.Id, dataJson, lifetime)
+	if result.Err() != nil {
+		log.Errorf("Saving Id %s failed: %s", session.Id, result.Err().Error())
+		s.sendInternalServerError(res)
+		return
+	}
+	session.Data = requestBody.Data
 
 	for key, value := range requestBody.Data {
 		log.Debugf("%s: %s", key, value)
@@ -97,7 +119,7 @@ func (s *Session) handlePut(res http.ResponseWriter, req *http.Request) {
 
 	// write request
 	res.Header().Set(contentHeader, contentTypeJson)
-	res.WriteHeader(http.StatusOK)
+	res.WriteHeader(status)
 	err = json.NewEncoder(res).Encode(session)
 	if err != nil {
 		log.Errorf("Wasn't able to write body: %s", err)
@@ -158,4 +180,25 @@ func (s *Session) sendPlain(msg string, res http.ResponseWriter, code int) {
 	if i < 1 {
 		log.Errorf("Wasn't able to write body: %d", i)
 	}
+}
+
+func (s *Session) sendInternalServerError(res http.ResponseWriter) {
+	s.sendPlain(
+		"Session could not be stored because of internal error. Contact administrator or retry it later.",
+		res,
+		http.StatusInternalServerError,
+	)
+}
+
+func (s *Session) mergeData(old map[string]string, new map[string]string) map[string]string {
+	result := make(map[string]string)
+	for key, value := range old {
+		result[key] = value
+	}
+
+	for key, value := range new {
+		result[key] = value
+	}
+
+	return result
 }
