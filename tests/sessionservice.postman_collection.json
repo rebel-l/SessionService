@@ -18,13 +18,15 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
+									"var maxResponseTime = 30;\r",
+									"\r",
 									"pm.test(\"response is ok\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"    pm.response.to.have.status(\"OK\");\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Response time is less than 20ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(20);\r",
+									"pm.test(\"Response time is less than \" + maxResponseTime + \"ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(maxResponseTime);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"response has body\", function () {\r",
@@ -130,6 +132,886 @@
 							]
 						},
 						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "session",
+			"description": "session endpoint",
+			"item": [
+				{
+					"name": "session:GET->NoHeaderUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    pm.response.to.have.status(\"Forbidden\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"Authetification failed! Ensure you send correct X-APP-ID & X-API-KEY within your header.\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Starting new empty session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:GET->WrongHeaderKeyUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    pm.response.to.have.status(\"Forbidden\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"Authetification failed! Ensure you send correct X-APP-ID & X-API-KEY within your header.\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "wrongkey"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Starting new empty session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:GET->NewUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    pm.response.to.have.status(\"Forbidden\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"Authetification failed! Ensure you send correct X-APP-ID & X-API-KEY within your header.\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Starting new empty session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:GET->NewHappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"OK\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "45319713e54c8184d70633583101a42a"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Starting new empty session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:PUT->NoHeaderUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    pm.response.to.have.status(\"Forbidden\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"Authetification failed! Ensure you send correct X-APP-ID & X-API-KEY within your header.\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"data\": {\r\n    \"key\": \"value\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Updates an existing session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:PUT->WrongHeaderKeyUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    pm.response.to.have.status(\"Forbidden\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"Authetification failed! Ensure you send correct X-APP-ID & X-API-KEY within your header.\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "wrongkey"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"data\": {\r\n    \"key\": \"value\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Updates an existing session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:PUT->UpdateHappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const fixture = pm.globals.get(\"fixture\");\r",
+									"const timestamp = Math.floor(Date.now() / 1000)\r",
+									"\r",
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is application/json\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"sessionId\"));\r",
+									"    pm.expect(jsonData.lifetime).to.eql(1800);\r",
+									"    var resultExpires = compareExpires(timestamp, jsonData.expires)\r",
+									"    pm.expect(resultExpires).to.eql(true);\r",
+									"    pm.expect(jsonData.data.oldKey).to.eql(fixture.data.oldKey);\r",
+									"    pm.expect(jsonData.data.overrideKey).to.not.eql(fixture.data.overrideKey);\r",
+									"    pm.expect(jsonData.data.overrideKey).to.eql(\"overwritten\");\r",
+									"    pm.expect(jsonData.data.additionalProp).to.eql(\"a value to store\");\r",
+									"    pm.expect(jsonData.domain).to.eql(\"\");\r",
+									"});\r",
+									"\r",
+									"function compareExpires(expected, actual) {\r",
+									"    var diff = actual - expected;\r",
+									"    if (diff >= 1512) {\r",
+									"        return true;\r",
+									"    }\r",
+									"    \r",
+									"    return false;\r",
+									"}\r",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const fixture = {",
+									"    data: {",
+									"        oldKey: 'original value',",
+									"        overrideKey: 'old value'",
+									"    }",
+									"}",
+									"",
+									"const createSession = {",
+									"    url: 'http://{{url}}:4000/session/',",
+									"    method: 'PUT',",
+									"    header: 'content-type:application/json\\n' +",
+									"        'X-APP-ID:{{appId}}\\n' +",
+									"        'X-API-KEY:{{apiKey}}',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(fixture)",
+									"    }",
+									"}",
+									"",
+									"pm.globals.set(\"fixture\", fixture);",
+									"pm.sendRequest(createSession, function(err, response) {",
+									"    data = response.json();",
+									"    pm.environment.set(\"sessionId\", data.id);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "{{appId}}"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "{{apiKey}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"{{sessionId}}\",\r\n  \"data\": {\r\n  \t\"overrideKey\": \"overwritten\",\r\n    \"additionalProp\": \"a value to store\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Updates an existing session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:PUT->UpdateExpiredIdUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"Session was not found or has expired.\");\r",
+									"});\r",
+									"\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "45319713e54c8184d70633583101a42a"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"data\": {\r\n    \"additionalProp\": \"session not found or has expired\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Updates an existing session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:PUT->UpdateNoDataInBodyUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.response.to.have.status(\"Bad Request\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"A body needs to be send as JSON and it needs at least a data field\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "45319713e54c8184d70633583101a42a"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Updates an existing session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:PUT->UpdateEmptyDataInBodyUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.response.to.have.status(\"Bad Request\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"A body needs to be send as JSON and it needs at least a data field\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "45319713e54c8184d70633583101a42a"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"data\": {}\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Updates an existing session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:PUT->NewHappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const timestamp = Math.floor(Date.now() / 1000)\r",
+									"\r",
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is application/json\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var uuid = /[0-9A-Za-z]{8}-([0-9A-Za-z]{4}-){3}[0-9A-Za-z]{12}/\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(uuid.test(jsonData.id)).to.eql(true);\r",
+									"    pm.expect(jsonData.lifetime).to.eql(1800);\r",
+									"    var resultExpires = compareExpires(timestamp, jsonData.expires)\r",
+									"    pm.expect(resultExpires).to.eql(true);\r",
+									"    pm.expect(jsonData.data.key1).to.eql(\"value1\");\r",
+									"    pm.expect(jsonData.data.key2).to.eql(\"value2\");\r",
+									"    pm.expect(jsonData.data.key3).to.eql(\"value3\");\r",
+									"    pm.expect(jsonData.domain).to.eql(\"\");\r",
+									"});\r",
+									"\r",
+									"function compareExpires(expected, actual) {\r",
+									"    var diff = actual - expected;\r",
+									"    if (diff >= 1512) {\r",
+									"        return true;\r",
+									"    }\r",
+									"    \r",
+									"    return false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "45319713e54c8184d70633583101a42a"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\",\r\n    \"key3\": \"value3\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Updates an existing session"
+					},
+					"response": []
+				},
+				{
+					"name": "session:PUT->UpdateIdFormatNotMatchingUnhappy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.response.to.have.status(\"Bad Request\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 50ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response has body\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present and is text/plain\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eql(\"text/plain; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response body has correct data\", function () {\r",
+									"    var body = pm.response.text();\r",
+									"    pm.expect(body).to.eql(\"A body needs to be send as JSON and it needs at least a data field\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-APP-ID",
+								"value": "MyApp"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "45319713e54c8184d70633583101a42a"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"wrongformat\",\r\n  \"data\": {\r\n  \t\"key\": \"a nice value\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:4000/session/",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "4000",
+							"path": [
+								"session",
+								""
+							]
+						},
+						"description": "Updates an existing session"
 					},
 					"response": []
 				}
