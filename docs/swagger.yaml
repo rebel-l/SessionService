@@ -114,7 +114,8 @@ paths:
       tags:
       - "internal"
       summary: "updates a session"
-      description: "Updates the session."
+      description: "Updates the session. If the optional ID in body is not set, a\
+        \ new session is created."
       operationId: "updateSession"
       consumes:
       - "application/json"
@@ -123,8 +124,9 @@ paths:
       parameters:
       - in: "body"
         name: "session"
-        description: "pass the session you want to update"
-        required: false
+        description: "Pass the session you want to update. If id is left empty or\
+          \ not send endpoints creates a new sessions."
+        required: true
         schema:
           $ref: "#/definitions/SessionBody"
       responses:
@@ -142,6 +144,8 @@ paths:
           description: "The client is not allowed to do this request."
         404:
           description: "session was not found or has expired"
+        500:
+          description: "unexpected error"
       security:
       - apiKey: []
       - appId: []
