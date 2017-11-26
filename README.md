@@ -14,7 +14,8 @@ Optionally you are able to run the whole environment in a virtual machine. There
 	* vagrant-vbguest
 * [Oracle Virtual Box](https://www.virtualbox.org/)
 * [PHP](http://www.php.net/)
-* [Composer](https://getcomposer.org/)  
+* [Composer](https://getcomposer.org/)
+* [NodeJs](https://nodejs.org)
 
 # Development
 To get the development environment run you only need to follow the instructions under [Docker Environment](#dockerenv).
@@ -96,11 +97,24 @@ cd /vagrant # or the alias 'cdproj'
 
 On your virtual machine you can run your docker like described in the [Docker Environment](#dockerenv).
 
+# NodeJs setup (optional)
+To run the newman (postman) tests you need NodeJs installed (see optional requirements above). To install the necessary
+packages you need to run in the projects root folder:
+```bash
+npm install
+``` 
+
 # Quality Assurance
 For quality assurance [Travis CI](https://travis-ci.org) is connected with this repository. But before committing or 
 pushing anything to this repository you can quickly check everything by executing the build script:
 ```bash
 ./scripts/build.sh
+```
+
+There is also an acceptance test suite in the directory _tests_. These are postman tests which you can run (NodeJS is required)
+by the following command:
+```bash
+./node_modules/.bin/newman run tests/sessionservice.postman_collection.json -e tests/Development.postman_environment.json
 ```
 
 # API Documentation
