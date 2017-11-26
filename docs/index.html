@@ -3093,7 +3093,7 @@ try {
                                             <div class="clearfix"></div>
 
                                             <p></p>
-                                            <p class="marked">Updates the session.</p>
+                                            <p class="marked">Updates the session. If the optional ID in body is not set, a new session is created.</p>
                                             <p></p>
                                             <br />
 
@@ -3170,7 +3170,7 @@ public class InternalApiExample {
         //appId.setApiKeyPrefix("Token");
 
         InternalApi apiInstance = new InternalApi();
-        SessionBody session = ; // SessionBody | pass the session you want to update
+        SessionBody session = ; // SessionBody | Pass the session you want to update. If id is left empty or not send endpoints creates a new sessions.
         try {
             SessionResponse result = apiInstance.updateSession(session);
             System.out.println(result);
@@ -3193,7 +3193,7 @@ public class InternalApiExample {
 
     public static void main(String[] args) {
         InternalApi apiInstance = new InternalApi();
-        SessionBody session = ; // SessionBody | pass the session you want to update
+        SessionBody session = ; // SessionBody | Pass the session you want to update. If id is left empty or not send endpoints creates a new sessions.
         try {
             SessionResponse result = apiInstance.updateSession(session);
             System.out.println(result);
@@ -3228,7 +3228,7 @@ Configuration *apiConfig = [Configuration sharedConfig];
 //[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-APP-ID"];
 
 
-SessionBody *session = ; // pass the session you want to update (optional)
+SessionBody *session = ; // Pass the session you want to update. If id is left empty or not send endpoints creates a new sessions.
 
 InternalApi *apiInstance = [[InternalApi alloc] init];
 
@@ -3264,9 +3264,8 @@ appId.apiKey = "YOUR API KEY"
 
 var api = new .InternalApi()
 
-var opts = { 
-  'session':  // {SessionBody} pass the session you want to update
-};
+var session = ; // {SessionBody} Pass the session you want to update. If id is left empty or not send endpoints creates a new sessions.
+
 
 var callback = function(error, data, response) {
   if (error) {
@@ -3275,7 +3274,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updateSession(opts, callback);
+api.updateSession(session, callback);
 
                                                     </code></pre>
                                                 </div>
@@ -3309,7 +3308,7 @@ namespace Example
             // Configuration.Default.ApiKeyPrefix.Add("X-APP-ID", "Bearer");
 
             var apiInstance = new InternalApi();
-            var session = new SessionBody(); // SessionBody | pass the session you want to update (optional) 
+            var session = new SessionBody(); // SessionBody | Pass the session you want to update. If id is left empty or not send endpoints creates a new sessions.
 
             try
             {
@@ -3344,7 +3343,7 @@ io.swagger.client\Configuration::getDefaultConfiguration()->setApiKey('X-APP-ID'
 // io.swagger.client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-APP-ID', 'Bearer');
 
 $api_instance = new io.swagger.client\Api\InternalApi();
-$session = ; // SessionBody | pass the session you want to update
+$session = ; // SessionBody | Pass the session you want to update. If id is left empty or not send endpoints creates a new sessions.
 
 try {
     $result = $api_instance->updateSession($session);
@@ -3376,7 +3375,7 @@ try {
                                                         <th>Description</th>
                                                     </tr>
                                                     <!---->
-                                                        <tr><td style="width:150px;">session </td>
+                                                        <tr><td style="width:150px;">session <span style="color:red;">*</span></td>
 <td>
 
 
@@ -3385,8 +3384,8 @@ try {
 													var schemaWrapper = {
   "in" : "body",
   "name" : "session",
-  "description" : "pass the session you want to update",
-  "required" : false,
+  "description" : "Pass the session you want to update. If id is left empty or not send endpoints creates a new sessions.",
+  "required" : true,
   "schema" : {
     "$ref" : "#/definitions/SessionBody"
   }
@@ -3813,6 +3812,82 @@ try {
 
 
 
+                                                <h3> Status: 500 - unexpected error </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Internal-updateSession-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Internal-updateSession-schema">
+
+
+
+
+                                                        <div id='examples-Internal-updateSession-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "unexpected error"
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Internal-updateSession-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Internal-updateSession-schema-500');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Internal-updateSession-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
 
 
 
@@ -3850,7 +3925,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-11-05T15:56:28.588Z
+                    Generated 2017-11-26T22:48:17.559Z
                 </div>
             </div>
         </div>
