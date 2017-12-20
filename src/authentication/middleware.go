@@ -6,17 +6,17 @@ import (
 	"fmt"
 )
 
-type Authentification struct {
+type Authentication struct {
 	allowedAccounts map[string]Account
 }
 
-func New(allowedAccounts map[string]Account) *Authentification {
-	auth := new(Authentification)
+func New(allowedAccounts map[string]Account) *Authentication {
+	auth := new(Authentication)
 	auth.allowedAccounts = allowedAccounts
 	return auth
 }
 
-func (a *Authentification) Middleware(next http.Handler) http.Handler {
+func (a *Authentication) Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 		appId := req.Header.Get(HEADER_APPID_KEY)
 		log.Debugf("Authenticate AppId: %s", appId)
@@ -30,12 +30,12 @@ func (a *Authentification) Middleware(next http.Handler) http.Handler {
 			res.Write([]byte(msg))
 			return
 		}
-		log.Infof("Authentification for AppId '%s' passed", appId)
+		log.Infof("Authentication for AppId '%s' passed", appId)
 		next.ServeHTTP(res, req)
 	})
 }
 
-func (a *Authentification) authenticate(appId string, apiKey string) bool {
+func (a *Authentication) authenticate(appId string, apiKey string) bool {
 	if appId != "" && a.allowedAccounts[appId].ApiKey == apiKey {
 		return true
 	}
