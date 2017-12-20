@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/go-redis/redis"
+	"github.com/gorilla/mux"
 	"github.com/rebel-l/sessionservice/src/authentication"
 	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/endpoint"
+	"github.com/rebel-l/sessionservice/src/endpoint/session"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
-	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -47,7 +48,7 @@ func main() {
 type server struct {
 	config *configuration.Config
 	router *mux.Router
-	middleWare *authentication.Authentification
+	middleWare *authentication.Authentication
 	redis *redis.Client
 }
 
@@ -79,7 +80,8 @@ func (s *server) initEndpoints() *server {
 	endpoint.InitPing(s.redis, s.router)
 
 	// session
-	endpoint.InitSession(s.redis, s.router, s.middleWare, s.config.Service)
+	sessionEndpoint := session.NewSession(s.redis, s.middleWare, s.config.Service)
+	sessionEndpoint.Init(s.router)
 	sessionGet := http.HandlerFunc(sessionGet)	// TODO: remove
 	s.router.Handle("/session/", s.middleWare.Middleware(sessionGet)).Methods(http.MethodGet) // TODO: remove
 

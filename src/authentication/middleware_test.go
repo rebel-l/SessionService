@@ -27,7 +27,7 @@ func TestMiddlewareAuthenticateUnhappy(t *testing.T) {
 }
 
 type AuthenticateUnhappyTestCases struct {
-	auth *Authentification
+	auth *Authentication
 	appId string
 	apiKey string
 }
@@ -37,7 +37,7 @@ func MiddlewareAuthenticateUnhappyDataProvider() []AuthenticateUnhappyTestCases 
 
 	// 1. empty allowedAccounts
 	testCase1 := AuthenticateUnhappyTestCases{
-		auth: new(Authentification),
+		auth: new(Authentication),
 		appId: "noAccounts",
 		apiKey: "yes1",
 	}
