@@ -124,9 +124,11 @@ func (s *server) serve() {
 func sessionGet(w http.ResponseWriter, r *http.Request) {
 	log.Info("Executing session GET")
 	w.WriteHeader(http.StatusOK)
-	i,_ := w.Write([]byte("OK"))
+	i,err := w.Write([]byte("OK"))
 	if i < 1 {
 		log.Errorf("Wasn't able to write body: %d", i)
+	} else if err != nil {
+		log.Errorf("Wasn't able to write body: %s", err)
 	}
 	log.Info("Executing session GET done!")
 }
