@@ -5,7 +5,7 @@
 FROM ubuntu:16.04
 MAINTAINER Rebel L <dj@rebel-l.net>
 
-ENV GOVERSION 1.9
+ENV GOVERSION 1.9.2
 ENV GOPATH /workspace
 
 LABEL vendor="Rebel L" \
