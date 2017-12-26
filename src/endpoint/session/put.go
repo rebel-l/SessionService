@@ -43,35 +43,22 @@ func (put *Put) Handler(res http.ResponseWriter, req *http.Request) {
 		log.Debugf("Create new session: %s", sessionResponse.Id)
 		status = http.StatusCreated
 	} else {
-		// TODO: move code to own method
 		log.Debugf("Update session: %s", requestBody.Id)
 
-		// 1. load stored session
-		result := put.session.Redis.Get(requestBody.Id)
-
-		// 2. if key not found ==> return error (404)
-		storageData, err := result.Result()
+		// 1. load data
+		var oldData map[string]string
+		oldData, err, status = put.loadData(requestBody.Id)
 		if err != nil {
-			log.Errorf("Session Id %s not found or has expired: %s", sessionResponse.Id, err)
-			msg.Plain("Session was not found or has expired.",	http.StatusNotFound)
+			msg.Plain(err.Error(), status)
 			return
 		}
 
-		// 3. merge data with current stored
-		log.Debugf("Loaded session data for %s: %s", sessionResponse.Id, storageData)
-		oldData := make(map[string]string)
-		err = json.Unmarshal([]byte(storageData), &oldData)
-		if err != nil {
-			log.Errorf("Data loaded for %s can't be turned into map: %s", sessionResponse.Id, err)
-			msg.InternalServerError(InternalServerErrorText)
-			return
-		}
-
+		// 2. merge data with current stored data
 		requestBody.Data = put.mergeData(oldData, requestBody.Data)
 	}
 
 	// store data in redis
-	err = put.storeData(sessionResponse, requestBody.Data, msg)
+	err = put.storeData(sessionResponse, requestBody.Data)
 	if err != nil {
 		log.Error(err)
 		msg.InternalServerError(InternalServerErrorText)
@@ -84,7 +71,7 @@ func (put *Put) Handler(res http.ResponseWriter, req *http.Request) {
 	log.Info("Executing session PUT done!")
 }
 
-func (put *Put) storeData (response *response.Session, data map[string]string, msg endpoint.Message) error {
+func (put *Put) storeData (response *response.Session, data map[string]string) error {
 	lifetime := time.Duration(response.Lifetime) * time.Second
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -103,6 +90,34 @@ func (put *Put) storeData (response *response.Session, data map[string]string, m
 	}
 
 	return nil
+}
+
+// TODO: also needed for GET method
+func (put *Put) loadData(id string) (data map[string]string, err error, code int) {
+	// 1. load stored session
+	result := put.session.Redis.Get(id)
+	storageData, err := result.Result()
+
+	// 2. if key not found ==> respond error (404)
+	if err != nil {
+		log.Errorf("Session Id %s not found or has expired: %s", id, err)
+		code = http.StatusNotFound
+		err = errors.New("Session was not found or has expired.")
+		return
+	}
+
+	log.Debugf("Loaded session data for %s: %s", id, storageData)
+	data = make(map[string]string)
+	err = json.Unmarshal([]byte(storageData), &data)
+	if err != nil {
+		log.Errorf("Data loaded for %s can't be turned into map: %s", id, err)
+		code = http.StatusInternalServerError
+		err = errors.New(InternalServerErrorText)
+		return
+	}
+
+	code = http.StatusOK
+	return
 }
 
 func (put *Put) getRequestBody(req *http.Request) (body request.Update, err error) {
