@@ -16,7 +16,7 @@ func TestSessionDefault(t *testing.T) {
 	assert.Empty(t, session.Data, "Data should be empty by default")
 	assert.Equal(t, LIFETIME, session.Lifetime, "Default lifetime is not set")
 	at := AssertTime{now.Unix() + LIFETIME, session.Expires}
-	assert.Condition(t, at.greaterThanOrEqaul, "Expires needs to be greater or equal than now + default lifetime")
+	assert.Condition(t, at.greaterThanOrEqual, "Expires needs to be greater or equal than now + default lifetime")
 	assert.Empty(t, session.Domain, "Domain should be empty by default")
 }
 
@@ -29,7 +29,7 @@ func TestSessionIdAndLifetime(t *testing.T) {
 	assert.Equal(t, id, session.Id, "Id is not set")
 	assert.Equal(t, lifetime, session.Lifetime, "Lifetime is not set")
 	at := AssertTime{now.Unix() + int64(lifetime), session.Expires}
-	assert.Condition(t, at.greaterThanOrEqaul, "Expires needs to be greater or equal than now + default lifetime")
+	assert.Condition(t, at.greaterThanOrEqual, "Expires needs to be greater or equal than now + default lifetime")
 }
 
 func TestSessionJson(t *testing.T) {
@@ -81,7 +81,7 @@ type AssertTime struct {
 	actual int64
 }
 
-func (at *AssertTime) greaterThanOrEqaul() bool {
+func (at *AssertTime) greaterThanOrEqual() bool {
 	if at.actual >= at.expected {
 		return true
 	}
