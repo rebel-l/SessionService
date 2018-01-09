@@ -8,6 +8,7 @@ import (
 	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/endpoint"
 	"github.com/rebel-l/sessionservice/src/endpoint/session"
+	"github.com/rebel-l/sessionservice/src/storage"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
@@ -49,7 +50,8 @@ type server struct {
 	config *configuration.Config
 	router *mux.Router
 	middleWare *authentication.Authentication
-	redis *redis.Client
+	redis *redis.Client	// ToDo: deprecated
+	storage storage.Handler
 }
 
 func (s *server) init() *server {
@@ -63,12 +65,16 @@ func (s *server) init() *server {
 	// init middleware
 	s.middleWare = authentication.New(s.config.AccountList)
 
-	// init storage
+	// init storage & endpoints
+	s.initStorage().
+		initEndpoints()
+
+	return s
+}
+
+func (s *server) initStorage() *server {
 	s.redis = redis.NewClient(s.config.Redis)
-
-	// init endpoints
-	s.initEndpoints()
-
+	s.storage = storage.NewRedis(s.redis)
 	return s
 }
 
@@ -80,7 +86,7 @@ func (s *server) initEndpoints() *server {
 	endpoint.InitPing(s.redis, s.router)
 
 	// session
-	sessionEndpoint := session.NewSession(s.redis, s.middleWare, s.config.Service)
+	sessionEndpoint := session.NewSession(s.storage, s.middleWare, s.config.Service)
 	sessionEndpoint.Init(s.router)
 	sessionGet := http.HandlerFunc(sessionGet)	// TODO: remove
 	s.router.Handle("/session/", s.middleWare.Middleware(sessionGet)).Methods(http.MethodGet) // TODO: remove

@@ -78,9 +78,9 @@ func (put *Put) storeData (response *response.Session, data map[string]string) e
 		return errors.New(fmt.Sprintf("Saving Id %s failed: %s", response.Id, err))
 	}
 
-	result := put.session.Redis.Set(response.Id, dataJson, lifetime)
-	if result.Err() != nil {
-		return errors.New(fmt.Sprintf("Saving Id %s failed: %s", response.Id, result.Err().Error()))
+	err = put.session.Storage.Set(response.Id, dataJson, lifetime)
+	if err != nil {
+		return errors.New(fmt.Sprintf("Saving Id %s failed: %s", response.Id, err.Error()))
 	}
 	response.Data = data
 
@@ -95,8 +95,7 @@ func (put *Put) storeData (response *response.Session, data map[string]string) e
 // TODO: also needed for GET method
 func (put *Put) loadData(id string) (data map[string]string, err error, code int) {
 	// 1. load stored session
-	result := put.session.Redis.Get(id)
-	storageData, err := result.Result()
+	storageData, err := put.session.Storage.Get(id)
 
 	// 2. if key not found ==> respond error (404)
 	if err != nil {
