@@ -1,33 +1,31 @@
 package session
 
 import (
-	"testing"
+	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/authentication"
 	"github.com/rebel-l/sessionservice/src/configuration"
+	"github.com/rebel-l/sessionservice/src/storage"
 	"github.com/stretchr/testify/assert"
 	"github.com/gorilla/mux"
 	"net/http"
 	"reflect"
 	"unsafe"
-	"fmt"
+	"testing"
 )
 
 func TestEndpointSessionNewSession(t *testing.T) {
-	client := redis.NewClient(&redis.Options{})
+	storage := storage.NewRedis(redis.NewClient(&redis.Options{}))
 	auth := &authentication.Authentication{}
 	conf := &configuration.Service{}
-	session := NewSession(client, auth, conf)
-	assert.Equal(t, client, session.Redis, "Wasn't able to set Redis client")
+	session := NewSession(storage, auth, conf)
+	assert.Equal(t, storage, session.Storage, "Wasn't able to set storage")
 	assert.Equal(t, auth, session.Authentication, "Wasn't able to set authentication")
 	assert.Equal(t, conf, session.Config, "Wasn't able to set config")
 }
 
 func TestEndpointSessionHandlerFactoryHappy(t *testing.T) {
-	client := redis.NewClient(&redis.Options{})
-	auth := &authentication.Authentication{}
-	conf := &configuration.Service{}
-	session := NewSession(client, auth, conf)
+	session := getSession()
 	handler := session.handlerFactory(http.MethodPut)
 	result := reflect.TypeOf(handler).String()
 	assert.Equal(t, "http.HandlerFunc", result, "Returned type needs to be of type 'http.HandlerFunc'")
@@ -37,17 +35,13 @@ func TestEndpointSessionInit(t *testing.T) {
 	expectedMethods := make(map[string]int)
 	expectedMethods["PUT"] = 0
 
-	client := redis.NewClient(&redis.Options{})
-	auth := &authentication.Authentication{}
-	conf := &configuration.Service{}
-	session := NewSession(client, auth, conf)
-	router := mux.NewRouter()
-
 	// assert before initialisation
+	router := mux.NewRouter()
 	routes := extractRoutes(router)
 	assert.Equal(t, 0, len(routes), "There should not exist any route before initialisation")
 
 	// assert after initialisation
+	session := getSession()
 	session.Init(router)
 	routes = extractRoutes(router)
 	assert.Equal(t, 1, len(routes), "There should exactly one route exist after initialisation")
@@ -75,4 +69,11 @@ func extractRoutes(router *mux.Router) []*mux.Route {
 
 	// convert routes
 	return f.Interface().([]*mux.Route)
+}
+
+func getSession() *Session {
+	storage := storage.NewRedis(redis.NewClient(&redis.Options{}))
+	auth := &authentication.Authentication{}
+	conf := &configuration.Service{}
+	return NewSession(storage, auth, conf)
 }

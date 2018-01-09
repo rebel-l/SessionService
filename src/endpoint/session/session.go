@@ -1,27 +1,27 @@
 package session
 
 import (
-	"github.com/go-redis/redis"
 	"github.com/gorilla/mux"
 	"github.com/rebel-l/sessionservice/src/authentication"
 	"github.com/rebel-l/sessionservice/src/configuration"
+	"github.com/rebel-l/sessionservice/src/storage"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 
 // Session handles the session endpoints
 type Session struct {
-	Redis          *redis.Client
+	Storage        storage.Handler
 	Authentication *authentication.Authentication
 	Config         *configuration.Service
 }
 
 func NewSession(
-	redisClient *redis.Client,
+	storage storage.Handler,
 	authentication *authentication.Authentication,
 	config *configuration.Service) *Session {
 	s := new(Session)
-	s.Redis = redisClient
+	s.Storage = storage
 	s.Authentication = authentication
 	s.Config = config
 	return s
