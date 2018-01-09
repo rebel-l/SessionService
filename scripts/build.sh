@@ -12,7 +12,7 @@ echo
 # Execute tests
 echo -en "\E[40;35m\033[1mExecute tests\033[0m"
 echo
-go test -v ./src/***
+go test -v ./...
 EXITCODE=$?
 if [ $EXITCODE != 0 ]
 then
