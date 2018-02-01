@@ -42,10 +42,10 @@ Vagrant.configure("2") do |config|
             # You may also specify custom JSON attributes:
             chef.json = {
                 'Golang' => {
-                    'version' => '1.9'
+                    'version' => '1.9.3'
                 },
                 'NodeJs' => {
-                    'version' => '8.8.1'
+                    'version' => '8.9.4'
                 },
                 'System' => {
                     'Iptables' => {
