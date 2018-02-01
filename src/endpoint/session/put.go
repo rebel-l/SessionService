@@ -31,7 +31,15 @@ func (put *Put) Handler(res http.ResponseWriter, req *http.Request) {
 	// read request body
 	requestBody, err := put.getRequestBody(req)
 	if err != nil {
-		log.Errorf("Parsing request body failed: %s", err)
+		log.Errorf("Reading request body failed: %s", err)
+		msg.Plain(BadRequestText, http.StatusBadRequest)
+		return
+	}
+
+	// validate request body
+	err = put.validateRequestBody(&requestBody)
+	if err != nil {
+		log.Errorf("Validating request body failed: %s", err)
 		msg.Plain(BadRequestText, http.StatusBadRequest)
 		return
 	}
@@ -129,7 +137,6 @@ func (put *Put) getRequestBody(req *http.Request) (body request.Update, err erro
 		return
 	}
 
-	err = put.validateRequestBody(&body)
 	return
 }
 
