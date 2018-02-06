@@ -1,10 +1,11 @@
 package response
 
 import (
+	"encoding/json"
+	"github.com/rebel-l/sessionservice/src/utils/testify"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
-	"encoding/json"
 )
 
 func TestSessionDefault(t *testing.T) {
@@ -15,8 +16,8 @@ func TestSessionDefault(t *testing.T) {
 	assert.Regexp(t, "[0-9A-Za-z]{8}-([0-9A-Za-z]{4}-){3}[0-9A-Za-z]{12}", session.Id, "Id should be a UUID")
 	assert.Empty(t, session.Data, "Data should be empty by default")
 	assert.Equal(t, LIFETIME, session.Lifetime, "Default lifetime is not set")
-	at := AssertTime{now.Unix() + LIFETIME, session.Expires}
-	assert.Condition(t, at.greaterThanOrEqual, "Expires needs to be greater or equal than now + default lifetime")
+	at := testify.AssertTime{now.Unix() + LIFETIME, session.Expires}
+	assert.Condition(t, at.GreaterThanOrEqual, "Expires needs to be greater or equal than now + default lifetime")
 	assert.Empty(t, session.Domain, "Domain should be empty by default")
 }
 
@@ -28,8 +29,8 @@ func TestSessionIdAndLifetime(t *testing.T) {
 
 	assert.Equal(t, id, session.Id, "Id is not set")
 	assert.Equal(t, lifetime, session.Lifetime, "Lifetime is not set")
-	at := AssertTime{now.Unix() + int64(lifetime), session.Expires}
-	assert.Condition(t, at.greaterThanOrEqual, "Expires needs to be greater or equal than now + default lifetime")
+	at := testify.AssertTime{now.Unix() + int64(lifetime), session.Expires}
+	assert.Condition(t, at.GreaterThanOrEqual, "Expires needs to be greater or equal than now + default lifetime")
 }
 
 func TestSessionJson(t *testing.T) {
@@ -76,14 +77,3 @@ func countInArray(list []string, match string) int {
 	return res
 }
 
-type AssertTime struct {
-	expected int64
-	actual int64
-}
-
-func (at *AssertTime) greaterThanOrEqual() bool {
-	if at.actual >= at.expected {
-		return true
-	}
-	return false
-}
