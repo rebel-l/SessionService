@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/rebel-l/sessionservice/src/authentication"
 	"github.com/rebel-l/sessionservice/src/configuration"
+	"github.com/rebel-l/sessionservice/src/request"
 	"github.com/rebel-l/sessionservice/src/response"
 	"github.com/rebel-l/sessionservice/src/storage"
 	"github.com/stretchr/testify/assert"
@@ -12,7 +13,7 @@ import (
 	"strings"
 	"testing"
 	"time"
-	"github.com/rebel-l/sessionservice/src/request"
+	"fmt"
 )
 
 func TestEndpointSessionPutNewPut(t *testing.T) {
@@ -203,10 +204,75 @@ type dataProviderValidateUnhappy struct {
 	err string
 }
 
+func TestEndpointSessionPutMergeDataHappy(t *testing.T) {
+	// setup
+	cases := getTestCasesForMergeData()
+	storage := new(storage.HandlerMock)
+	session := getSessionMock(storage)
+	put := NewPut(session)
+
+	// test
+	for k, v := range cases {
+		res := put.mergeData(v.old, v.new)
+		assert.Equal(t, v.resultLength, len(res), fmt.Sprintf("Case %d: Expected length of map is wrong, merge didn't work", k))
+		assert.Equal(t, v.result, res, fmt.Sprintf("Case %d: Result is not the expected one",k ))
+	}
+}
+
+type dataProviderMergeData struct {
+	old map[string]string
+	new map[string]string
+	result map[string]string
+	resultLength int
+}
+
+func getTestCasesForMergeData() []dataProviderMergeData {
+	cases := make([]dataProviderMergeData, 7)
+
+	// case 0: old = empty(nil), new = empty(nil) ==> result = empty
+	cases[0].result = map[string]string{}
+
+	// case 1: old = empty, new = empty ==> result = empty
+	cases[1].old = map[string]string{}
+	cases[1].new = map[string]string{}
+	cases[1].result = map[string]string{}
+
+	// case 2: old = empty, new = new data ==> result = new data
+	cases[2].old = map[string]string{}
+	cases[2].new = map[string]string{"key": "value"}
+	cases[2].result = map[string]string{"key": "value"}
+	cases[2].resultLength = 1
+
+	// case 3: old = old data, new = empty ==> result = old data
+	cases[3].old = map[string]string{"key1": "value1", "key2": "value2"}
+	cases[3].new = map[string]string{}
+	cases[3].result = map[string]string{"key1": "value1", "key2": "value2"}
+	cases[3].resultLength = 2
+
+	// case 4: old = old data, new = new data (different keys) ==> result = old + new data
+	cases[4].old = map[string]string{"oldKey": "old value"}
+	cases[4].new = map[string]string{"newKey": "new value"}
+	cases[4].result = map[string]string{"oldKey": "old value", "newKey": "new value"}
+	cases[4].resultLength = 2
+
+	// case 5: old = old data, new = new data (same keys) ==> result = new data
+	cases[5].old = map[string]string{"myKey": "old value"}
+	cases[5].new = map[string]string{"myKey": "new value"}
+	cases[5].result = map[string]string{"myKey": "new value"}
+	cases[5].resultLength = 1
+
+	// case 6: old = old data, new = new data (some new keys and some same keys) ==> result = old data (only keys missing in new data) + new data
+	cases[6].old = map[string]string{"oldKey": "old value", "sameKey": "another old value"}
+	cases[6].new = map[string]string{"newKey": "new value", "sameKey": "another new value"}
+	cases[6].result = map[string]string{"oldKey": "old value", "newKey": "new value", "sameKey": "another new value"}
+	cases[6].resultLength = 3
+
+	return cases
+}
+
 /**
 ToDo: missing tests ...
 	Handler()
-	mergeData()
  */
 
 func getSessionMock(storage storage.Handler) *Session {
