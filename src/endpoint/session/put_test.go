@@ -3,17 +3,21 @@ package session
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/rebel-l/sessionservice/src/authentication"
 	"github.com/rebel-l/sessionservice/src/configuration"
 	"github.com/rebel-l/sessionservice/src/request"
 	"github.com/rebel-l/sessionservice/src/response"
 	"github.com/rebel-l/sessionservice/src/storage"
+	"github.com/rebel-l/sessionservice/src/utils/testify"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"io"
 	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 	"time"
-	"fmt"
 )
 
 func TestEndpointSessionPutNewPut(t *testing.T) {
@@ -270,10 +274,148 @@ func getTestCasesForMergeData() []dataProviderMergeData {
 	return cases
 }
 
-/**
-ToDo: missing tests ...
-	Handler()
- */
+func TestEndpointSessionPutHandlerHappy(t *testing.T) {
+	cases := getTestCasesHandlerHappy()
+
+	for k, v := range cases {
+		// setup
+		storage := v.storage
+		session := getSessionMock(storage)
+		put := NewPut(session)
+
+		req, err := http.NewRequest("PUT", "/session/", v.body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(put.Handler)
+
+		// test
+		handler.ServeHTTP(rr, req)
+		assert.Equal(t, v.resultCode, rr.Code, fmt.Sprintf("Case %d: The response should show a success", k))
+
+		body := new(response.Session)
+		decoder := json.NewDecoder(rr.Body)
+		err = decoder.Decode(body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if v.id == "" {
+			assert.Equal(t, 36, len(body.Id), fmt.Sprintf("Case %d: Id was not returned or wrong id was returned", k))
+		} else {
+			assert.Equal(t, v.id, body.Id, fmt.Sprintf("Case %d: Id was not returned or wrong id was returned", k))
+		}
+
+		data, err := json.Marshal(body.Data)
+		if err != nil {
+			t.Fatal(err)
+		}
+		assert.Equal(t, v.resultData, data, "Data was not returned or wrong returned")
+		assert.Equal(t, 1800, body.Lifetime, "Lifetime was not returned or wrong returned")
+		expires := testify.AssertTime{v.expires, body.Expires}
+		assert.Condition(t, expires.GreaterThanOrEqual, "Expires needs to be greater or equal than now + default lifetime")
+		assert.Equal(t, "", body.Domain, "Domain is not supported yet and should be therefor an empty string")
+
+		storage.AssertExpectations(t)
+	}
+}
+
+func getTestCasesHandlerHappy() []dataProviderHandler {
+	lifetime := time.Duration(1800)
+	cases := make([]dataProviderHandler, 2)
+
+	// case 0: with id & body ==> result: same id and a body
+	cases[0].id = "8d9af075-1aa6-46c0-913d-ff42f22ca307"
+	cases[0].body = strings.NewReader(`{"id": "8d9af075-1aa6-46c0-913d-ff42f22ca307", "data": {"key": "value"}}`)
+	cases[0].resultData = []byte(`{"key":"value"}`)
+	storage0 := new(storage.HandlerMock)
+	storage0.On("Get", cases[0].id).Return("{}", nil)
+	storage0.On("Set", cases[0].id, cases[0].resultData, lifetime * time.Second).Return(nil)
+	cases[0].storage = storage0
+	cases[0].resultCode = http.StatusOK
+	cases[0].expires = time.Now().Unix() + response.LIFETIME
+
+	// case 1: with body only ==> result: new id and a body
+	cases[1].id = ""
+	cases[1].body = strings.NewReader(`{"data":{"myKey":"my value"}}`)
+	cases[1].resultData = []byte(`{"myKey":"my value"}`)
+	storage1 := new(storage.HandlerMock)
+	storage1.On("Set", mock.Anything, cases[1].resultData, lifetime * time.Second).Return(nil)
+	cases[1].storage = storage1
+	cases[1].resultCode = http.StatusCreated
+	cases[1].expires = time.Now().Unix() + response.LIFETIME
+
+	return cases
+}
+
+type dataProviderHandler struct {
+	storage    *storage.HandlerMock
+	id         string
+	body       io.Reader
+	resultCode int
+	resultData []byte
+	expires int64
+	message string
+}
+
+
+func TestEndpointSessionPutHandlerUnhappy(t *testing.T) {
+	cases := getTestCasesHandlerUnhappy()
+
+	for k, v := range cases {
+		// setup
+		storage := v.storage
+		session := getSessionMock(storage)
+		put := NewPut(session)
+
+		req, err := http.NewRequest("PUT", "/session/", v.body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(put.Handler)
+
+		// test
+		handler.ServeHTTP(rr, req)
+		assert.Equal(t, v.resultCode, rr.Code, fmt.Sprintf("Case %d: The response should show an client or server error", k))
+		assert.Equal(t, v.message, rr.Body.String(), fmt.Sprintf("Case %d: Result body should contain an error message", k))
+
+	}
+}
+
+func getTestCasesHandlerUnhappy() []dataProviderHandler {
+	id := "8d9af075-1aa6-46c0-913d-ff42f22ca307"
+	lifetime := time.Duration(1800)
+	cases := make([]dataProviderHandler, 4)
+
+	// case 0: getRequestBody fails
+	cases[0].body = strings.NewReader("no JSON")
+	cases[0].resultCode = http.StatusBadRequest
+	cases[0].message = BadRequestText
+
+	// case 1: validateRequestBody fails
+	cases[1].body = strings.NewReader(`{"id":"not a valid id"}`)
+	cases[1].resultCode = http.StatusBadRequest
+	cases[1].message = BadRequestText
+
+	// case 2: loadData fails
+	cases[2].body = strings.NewReader(`{"id": "8d9af075-1aa6-46c0-913d-ff42f22ca307", "data": {"key": "value"}}`)
+	cases[2].storage = new(storage.HandlerMock)
+	cases[2].storage.On("Get", id).Return("", errors.New("Failing loading data"))
+	cases[2].resultCode = http.StatusNotFound
+	cases[2].message = SessionNotFoundText
+
+	// case 3: storeData fails
+	cases[3].body = strings.NewReader(`{"data": {"key": "value"}}`)
+	cases[3].storage = new(storage.HandlerMock)
+	cases[3].storage.On("Set", mock.Anything, []byte(`{"key":"value"}`), lifetime * time.Second).Return(errors.New("Failing storing data"))
+	cases[3].resultCode = http.StatusInternalServerError
+	cases[3].message = InternalServerErrorText
+
+	return cases
+}
 
 func getSessionMock(storage storage.Handler) *Session {
 	auth := &authentication.Authentication{}

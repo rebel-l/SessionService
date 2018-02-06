@@ -109,7 +109,7 @@ func (put *Put) loadData(id string) (data map[string]string, err error, code int
 	if err != nil {
 		log.Errorf("Session Id %s not found or has expired: %s", id, err)
 		code = http.StatusNotFound
-		err = errors.New("Session was not found or has expired.")
+		err = errors.New(SessionNotFoundText)
 		return
 	}
 
