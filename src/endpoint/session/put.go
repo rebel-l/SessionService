@@ -32,7 +32,7 @@ func (put *Put) Handler(res http.ResponseWriter, req *http.Request) {
 	requestBody, err := put.getRequestBody(req)
 	if err != nil {
 		log.Errorf("Reading request body failed: %s", err)
-		msg.Plain(BadRequestText, http.StatusBadRequest)
+		msg.Plain(BadRequestTextPut, http.StatusBadRequest)
 		return
 	}
 
@@ -40,7 +40,7 @@ func (put *Put) Handler(res http.ResponseWriter, req *http.Request) {
 	err = put.validateRequestBody(&requestBody)
 	if err != nil {
 		log.Errorf("Validating request body failed: %s", err)
-		msg.Plain(BadRequestText, http.StatusBadRequest)
+		msg.Plain(BadRequestTextPut, http.StatusBadRequest)
 		return
 	}
 
@@ -55,7 +55,7 @@ func (put *Put) Handler(res http.ResponseWriter, req *http.Request) {
 
 		// 1. load data
 		var oldData map[string]string
-		oldData, err, status = put.loadData(requestBody.Id)
+		oldData, err, status = put.session.loadData(requestBody.Id)
 		if err != nil {
 			msg.Plain(err.Error(), status)
 			return
@@ -98,33 +98,6 @@ func (put *Put) storeData (response *response.Session, data map[string]string) e
 	}
 
 	return nil
-}
-
-// TODO: also needed for GET method
-func (put *Put) loadData(id string) (data map[string]string, err error, code int) {
-	// 1. load stored session
-	storageData, err := put.session.Storage.Get(id)
-
-	// 2. if key not found ==> respond error (404)
-	if err != nil {
-		log.Errorf("Session Id %s not found or has expired: %s", id, err)
-		code = http.StatusNotFound
-		err = errors.New(SessionNotFoundText)
-		return
-	}
-
-	log.Debugf("Loaded session data for %s: %s", id, storageData)
-	data = make(map[string]string)
-	err = json.Unmarshal([]byte(storageData), &data)
-	if err != nil {
-		log.Errorf("Data loaded for %s can't be turned into map: %s", id, err)
-		code = http.StatusInternalServerError
-		err = errors.New(InternalServerErrorText)
-		return
-	}
-
-	code = http.StatusOK
-	return
 }
 
 func (put *Put) getRequestBody(req *http.Request) (body request.Update, err error) {

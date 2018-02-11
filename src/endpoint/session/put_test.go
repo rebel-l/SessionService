@@ -79,51 +79,6 @@ func TestEndpointSessionPutStoreDataUnhappy(t *testing.T) {
 	storage.AssertExpectations(t)
 }
 
-func TestEndpointSessionPutLoadDataHappy(t *testing.T) {
-	// setup fixtures
-	id := "existingId"
-	data := make(map[string]string)
-	data["someKey"] = "a boring value"
-	dataJson, err := json.Marshal(data)
-	if err != nil {
-		t.Error("Error on converting to JSON")
-	}
-
-	// setup mock
-	storage := new(storage.HandlerMock)
-	storage.On("Get", id).Return(string(dataJson), nil)
-
-	// do the test
-	session := getSessionMock(storage)
-	put := NewPut(session)
-	result, err, code := put.loadData(id)
-	assert.Equal(t, data, result, "Data was not loaded correct")
-	assert.Nil(t, err, "There should be not error on happy path")
-	assert.Equal(t, http.StatusOK, code, "The http code should show a success")
-	storage.AssertExpectations(t)
-}
-
-func TestEndpointSessionPutLoadDataUnhappy(t *testing.T) {
-	// setup fixtures
-	id := "existingId"
-	data := make(map[string]string)
-	data["someKey"] = "a boring value"
-	errMsg := "Session was not found or has expired."
-
-	// setup mock
-	storage := new(storage.HandlerMock)
-	storage.On("Get", id).Return("", errors.New("Failing loading data"))
-
-	// do the test
-	session := getSessionMock(storage)
-	put := NewPut(session)
-	result, err, code := put.loadData(id)
-	assert.Nil(t, result, "Data should be not returned on fail")
-	assert.Equal(t, errMsg, err.Error(), "There should be an error on fail")
-	assert.Equal(t, http.StatusNotFound, code, "The http code should show a not found")
-	storage.AssertExpectations(t)
-}
-
 func TestEndpointSessionPutGetRequestBodyHappy(t *testing.T) {
 	// setup
 	requestBodyRaw, err := http.NewRequest("POST", "/session", strings.NewReader(`{"id": "myId","data":{"key":"value"}}`))
@@ -393,12 +348,12 @@ func getTestCasesHandlerUnhappy() []dataProviderHandler {
 	// case 0: getRequestBody fails
 	cases[0].body = strings.NewReader("no JSON")
 	cases[0].resultCode = http.StatusBadRequest
-	cases[0].message = BadRequestText
+	cases[0].message = BadRequestTextPut
 
 	// case 1: validateRequestBody fails
 	cases[1].body = strings.NewReader(`{"id":"not a valid id"}`)
 	cases[1].resultCode = http.StatusBadRequest
-	cases[1].message = BadRequestText
+	cases[1].message = BadRequestTextPut
 
 	// case 2: loadData fails
 	cases[2].body = strings.NewReader(`{"id": "8d9af075-1aa6-46c0-913d-ff42f22ca307", "data": {"key": "value"}}`)

@@ -1,6 +1,8 @@
 package session
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/rebel-l/sessionservice/src/authentication"
@@ -44,7 +46,7 @@ func TestEndpointSessionInit(t *testing.T) {
 	session := getSession()
 	session.Init(router)
 	routes = extractRoutes(router)
-	assert.Equal(t, 1, len(routes), "There should exactly one route exist after initialisation")
+	assert.Equal(t, 2, len(routes), "There should exactly two routes exist after initialisation")
 	for _, v := range routes {
 		methods, err := v.GetMethods()
 		if err != nil {
@@ -56,7 +58,7 @@ func TestEndpointSessionInit(t *testing.T) {
 	}
 
 	for k, v := range expectedMethods {
-		assert.Exactly(t, 1, v, fmt.Sprintf("%s method shoul only be set up once", k))
+		assert.Exactly(t, 1, v, fmt.Sprintf("%s method should only be set up once", k))
 	}
 }
 
@@ -76,4 +78,48 @@ func getSession() *Session {
 	auth := &authentication.Authentication{}
 	conf := &configuration.Service{}
 	return NewSession(storage, auth, conf)
+}
+
+
+func TestEndpointSessionLoadDataHappy(t *testing.T) {
+	// setup fixtures
+	id := "existingId"
+	data := make(map[string]string)
+	data["someKey"] = "a boring value"
+	dataJson, err := json.Marshal(data)
+	if err != nil {
+		t.Error("Error on converting to JSON")
+	}
+
+	// setup mock
+	storage := new(storage.HandlerMock)
+	storage.On("Get", id).Return(string(dataJson), nil)
+
+	// do the test
+	session := getSessionMock(storage)
+	result, err, code := session.loadData(id)
+	assert.Equal(t, data, result, "Data was not loaded correct")
+	assert.Nil(t, err, "There should be not error on happy path")
+	assert.Equal(t, http.StatusOK, code, "The http code should show a success")
+	storage.AssertExpectations(t)
+}
+
+func TestEndpointSessionLoadDataUnhappy(t *testing.T) {
+	// setup fixtures
+	id := "existingId"
+	data := make(map[string]string)
+	data["someKey"] = "a boring value"
+	errMsg := "Session was not found or has expired."
+
+	// setup mock
+	storage := new(storage.HandlerMock)
+	storage.On("Get", id).Return("", errors.New("Failing loading data"))
+
+	// do the test
+	session := getSessionMock(storage)
+	result, err, code := session.loadData(id)
+	assert.Nil(t, result, "Data should be not returned on fail")
+	assert.Equal(t, errMsg, err.Error(), "There should be an error on fail")
+	assert.Equal(t, http.StatusNotFound, code, "The http code should show a not found")
+	storage.AssertExpectations(t)
 }
